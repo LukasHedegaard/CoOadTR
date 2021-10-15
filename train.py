@@ -227,24 +227,24 @@ def evaluate(model, criterion, data_loader, device, logger, args, epoch, nprocs=
             # prob_val = F.softmax(enc_score_p0, dim=-1)[:, :21].cpu().numpy()
             all_probs += list(prob_val)  # (89, 21)
             # dec_score_metrics = dec_scores[:, :21].cpu().numpy()
-            dec_score_metrics += list(
-                F.softmax(dec_scores.view(-1, num_class)[:, :21], dim=-1).cpu().numpy()
-            )
+            # dec_score_metrics += list(
+            #     F.softmax(dec_scores.view(-1, num_class)[:, :21], dim=-1).cpu().numpy()
+            # )
             # dec_score_metrics += list(F.softmax(dec_scores.view(-1, num_class), dim=-1)[:, :21].cpu().numpy())
             t0_class_batch = class_h_target[:, :21].cpu().numpy()
             all_classes += list(t0_class_batch)
             dec_target_metrics += list(
                 dec_target.view(-1, num_class)[:, :21].cpu().numpy()
             )
-            for iii in range(num_query):
-                dec_score_metrics_every[str(iii)] += list(
-                    F.softmax(dec_scores[:, iii, :].view(-1, num_class)[:, :21], dim=-1)
-                    .cpu()
-                    .numpy()
-                )
-                dec_target_metrics_every[str(iii)] += list(
-                    dec_target[:, iii, :].view(-1, num_class)[:, :21].cpu().numpy()
-                )
+            # for iii in range(num_query):
+            # dec_score_metrics_every[str(iii)] += list(
+            #     F.softmax(dec_scores[:, iii, :].view(-1, num_class)[:, :21], dim=-1)
+            #     .cpu()
+            #     .numpy()
+            # )
+            # dec_target_metrics_every[str(iii)] += list(
+            #     dec_target[:, iii, :].view(-1, num_class)[:, :21].cpu().numpy()
+            # )
         # metric_logger.update(class_error=loss_dict_reduced['class_error'])
 
     # gather the stats from all processes
@@ -283,22 +283,22 @@ def evaluate(model, criterion, data_loader, device, logger, args, epoch, nprocs=
             "[Epoch-{}] [IDU-{}] mAP: {:.4f}\n".format(epoch, feat_type, map)
         )
 
-        results_dec = {}
-        results_dec["probs"] = np.asarray(dec_score_metrics).T
-        results_dec["labels"] = np.asarray(dec_target_metrics).T
-        dec_map_2, dec_aps_2, _, _ = util.frame_level_map_n_cap_thumos(results_dec)
-        logger.output_print("dec_mAP all together: | {} |.".format(dec_map_2))
-        all_decoder = 0.0
-        for iii in range(num_query):
-            results_dec = {}
-            results_dec["probs"] = np.asarray(dec_score_metrics_every[str(iii)]).T
-            results_dec["labels"] = np.asarray(dec_target_metrics_every[str(iii)]).T
-            dec_map_2, dec_aps_2, _, _ = util.frame_level_map_n_cap_thumos(results_dec)
-            logger.output_print("dec_mAP_pred | {} : {} |.".format(iii, dec_map_2))
-            all_decoder += dec_map_2
-        logger.output_print(
-            "{}: | {:.4f} |.".format("all decoder map", all_decoder / num_query)
-        )
+        # results_dec = {}
+        # results_dec["probs"] = np.asarray(dec_score_metrics).T
+        # results_dec["labels"] = np.asarray(dec_target_metrics).T
+        # dec_map_2, dec_aps_2, _, _ = util.frame_level_map_n_cap_thumos(results_dec)
+        # logger.output_print("dec_mAP all together: | {} |.".format(dec_map_2))
+        # all_decoder = 0.0
+        # for iii in range(num_query):
+        #     results_dec = {}
+        #     results_dec["probs"] = np.asarray(dec_score_metrics_every[str(iii)]).T
+        #     results_dec["labels"] = np.asarray(dec_target_metrics_every[str(iii)]).T
+        #     dec_map_2, dec_aps_2, _, _ = util.frame_level_map_n_cap_thumos(results_dec)
+        #     logger.output_print("dec_mAP_pred | {} : {} |.".format(iii, dec_map_2))
+        #     all_decoder += dec_map_2
+        # logger.output_print(
+        #     "{}: | {:.4f} |.".format("all decoder map", all_decoder / num_query)
+        # )
 
         for i, ap in enumerate(aps):
             cls_name = all_class_name[i]
