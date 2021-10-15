@@ -1,0 +1,35 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Train",
+            "type": "python",
+            "request": "launch",
+            "program": "main.py",
+            "env": {
+                "CUDA_VISIBLE_DEVICES": "4"
+            },
+            "console": "integratedTerminal",
+            "args": [
+                "--num_layers",
+                "3",
+                "--decoder_layers",
+                "5",
+                "--enc_layers",
+                "64",
+                "--output_dir",
+                "models/en_3_decoder_5_lr_drop_1",
+            ]
+        },
+    ]
+}
