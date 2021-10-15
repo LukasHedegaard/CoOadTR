@@ -30,7 +30,7 @@ class VisionTransformer_v3(nn.Module):
         conv_patch_representation=False,
         positional_encoding_type="learned",
         with_camera=True,
-        with_motion=False,
+        with_motion=True,
         num_channels=3072,
     ):
         super(VisionTransformer_v3, self).__init__()
