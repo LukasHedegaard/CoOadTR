@@ -78,7 +78,7 @@ def get_args_parser():
         "--feature", default="Anet2016_feature_v2", type=str, help="feature type"
     )
     parser.add_argument(
-        "--dim_feature", default=3072, type=int, help="input feature dims"
+        "--dim_feature", default=2048, type=int, help="input feature dims"
     )
     parser.add_argument("--patch_dim", default=1, type=int, help="input feature dims")
     parser.add_argument(

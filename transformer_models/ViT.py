@@ -10,7 +10,7 @@ from .PositionalEncoding import (
     LearnedPositionalEncoding,
 )
 
-__all__ = ['ViT_B16', 'ViT_B32', 'ViT_L16', 'ViT_L32', 'ViT_H14']
+__all__ = ["ViT_B16", "ViT_B32", "ViT_L16", "ViT_L32", "ViT_H14"]
 
 
 class VisionTransformer_v3(nn.Module):
@@ -28,7 +28,10 @@ class VisionTransformer_v3(nn.Module):
         attn_dropout_rate=0.0,
         use_representation=True,
         conv_patch_representation=False,
-        positional_encoding_type="learned", with_camera=True, with_motion=True, num_channels=3072,
+        positional_encoding_type="learned",
+        with_camera=True,
+        with_motion=False,
+        num_channels=3072,
     ):
         super(VisionTransformer_v3, self).__init__()
 
@@ -60,7 +63,7 @@ class VisionTransformer_v3(nn.Module):
             self.position_encoding = FixedPositionalEncoding(
                 self.embedding_dim,
             )
-        print('position encoding :', positional_encoding_type)
+        print("position encoding :", positional_encoding_type)
 
         self.pe_dropout = nn.Dropout(p=self.dropout_rate)
 
@@ -78,10 +81,10 @@ class VisionTransformer_v3(nn.Module):
         use_representation = False  # False
         if use_representation:
             self.mlp_head = nn.Sequential(
-                nn.Linear(embedding_dim + d_model, hidden_dim//2),
+                nn.Linear(embedding_dim + d_model, hidden_dim // 2),
                 # nn.Tanh(),
                 nn.ReLU(),
-                nn.Linear(hidden_dim//2, out_dim),
+                nn.Linear(hidden_dim // 2, out_dim),
             )
         else:
             self.mlp_head = nn.Linear(embedding_dim + d_model, out_dim)
@@ -102,7 +105,8 @@ class VisionTransformer_v3(nn.Module):
                 kernel_size=self.patch_dim,
                 stride=self.patch_dim,
                 padding=self._get_padding(
-                    'VALID',  (self.patch_dim),
+                    "VALID",
+                    (self.patch_dim),
                 ),
             )
         else:
@@ -116,15 +120,25 @@ class VisionTransformer_v3(nn.Module):
         # d_model = args.decoder_embedding_dim
         n_heads = args.decoder_num_heads
         d_layers = args.decoder_layers
-        d_ff = args.decoder_embedding_dim_out  # args.decoder_embedding_dim_out or 4*args.decoder_embedding_dim None
-        activation = 'gelu'  # 'gelu'
+        d_ff = (
+            args.decoder_embedding_dim_out
+        )  # args.decoder_embedding_dim_out or 4*args.decoder_embedding_dim None
+        activation = "gelu"  # 'gelu'
         self.decoder = Decoder(
             [
                 DecoderLayer(
-                    AttentionLayer(FullAttention(True, factor, attention_dropout=dropout),  # True
-                                   d_model, n_heads),  # ProbAttention  FullAttention
-                    AttentionLayer(FullAttention(False, factor, attention_dropout=dropout),  # False
-                                   d_model, n_heads),
+                    AttentionLayer(
+                        FullAttention(True, factor, attention_dropout=dropout),  # True
+                        d_model,
+                        n_heads,
+                    ),  # ProbAttention  FullAttention
+                    AttentionLayer(
+                        FullAttention(
+                            False, factor, attention_dropout=dropout
+                        ),  # False
+                        d_model,
+                        n_heads,
+                    ),
                     d_model,
                     d_ff,
                     dropout=dropout,
@@ -132,7 +146,7 @@ class VisionTransformer_v3(nn.Module):
                 )
                 for l in range(d_layers)
             ],
-            norm_layer=torch.nn.LayerNorm(d_model)
+            norm_layer=torch.nn.LayerNorm(d_model),
         )
         self.decoder_cls_token = nn.Parameter(torch.zeros(1, args.query_num, d_model))
         if positional_encoding_type == "learned":
@@ -143,7 +157,7 @@ class VisionTransformer_v3(nn.Module):
             self.decoder_position_encoding = FixedPositionalEncoding(
                 self.embedding_dim,
             )
-        print('position decoding :', positional_encoding_type)
+        print("position decoding :", positional_encoding_type)
         self.classifier = nn.Linear(d_model, out_dim)
         self.after_dropout = nn.Dropout(p=self.dropout_rate)
         # self.merge_fc = nn.Linear(d_model, 1)
@@ -162,7 +176,7 @@ class VisionTransformer_v3(nn.Module):
         # x = torch.cat((cls_tokens, x), dim=1)
         x = torch.cat((x, cls_tokens), dim=1)
         x = self.position_encoding(x)
-        x = self.pe_dropout(x)   # not delete
+        x = self.pe_dropout(x)  # not delete
 
         # apply transformer
         x = self.encoder(x)
@@ -172,7 +186,7 @@ class VisionTransformer_v3(nn.Module):
         decoder_cls_token = self.decoder_cls_token.expand(x.shape[0], -1, -1)
         # decoder_cls_token = self.after_dropout(decoder_cls_token)  # add
         # decoder_cls_token = self.decoder_position_encoding(decoder_cls_token)  # [128, 8, 1024]
-        dec = self.decoder(decoder_cls_token, x)   # [128, 8, 1024]
+        dec = self.decoder(decoder_cls_token, x)  # [128, 8, 1024]
         dec = self.after_dropout(dec)  # add
         # merge_atte = self.merge_sigmoid(self.merge_fc(dec))  # [128, 8, 1]
         # dec_for_token = (merge_atte*dec).sum(dim=1)  # [128, 1024]
@@ -189,19 +203,19 @@ class VisionTransformer_v3(nn.Module):
         return x, dec_cls_out
 
     def _get_padding(self, padding_type, kernel_size):
-        assert padding_type in ['SAME', 'VALID']
-        if padding_type == 'SAME':
+        assert padding_type in ["SAME", "VALID"]
+        if padding_type == "SAME":
             _list = [(k - 1) // 2 for k in kernel_size]
             return tuple(_list)
         return tuple(0 for _ in kernel_size)
 
 
-def ViT_B16(dataset='imagenet'):
-    if dataset == 'imagenet':
+def ViT_B16(dataset="imagenet"):
+    if dataset == "imagenet":
         img_dim = 224
         out_dim = 1000
         patch_dim = 16
-    elif 'cifar' in dataset:
+    elif "cifar" in dataset:
         img_dim = 32
         out_dim = 10
         patch_dim = 4
@@ -223,12 +237,12 @@ def ViT_B16(dataset='imagenet'):
     )
 
 
-def ViT_B32(dataset='imagenet'):
-    if dataset == 'imagenet':
+def ViT_B32(dataset="imagenet"):
+    if dataset == "imagenet":
         img_dim = 224
         out_dim = 1000
         patch_dim = 32
-    elif 'cifar' in dataset:
+    elif "cifar" in dataset:
         img_dim = 32
         out_dim = 10
         patch_dim = 4
@@ -250,12 +264,12 @@ def ViT_B32(dataset='imagenet'):
     )
 
 
-def ViT_L16(dataset='imagenet'):
-    if dataset == 'imagenet':
+def ViT_L16(dataset="imagenet"):
+    if dataset == "imagenet":
         img_dim = 224
         out_dim = 1000
         patch_dim = 16
-    elif 'cifar' in dataset:
+    elif "cifar" in dataset:
         img_dim = 32
         out_dim = 10
         patch_dim = 4
@@ -277,12 +291,12 @@ def ViT_L16(dataset='imagenet'):
     )
 
 
-def ViT_L32(dataset='imagenet'):
-    if dataset == 'imagenet':
+def ViT_L32(dataset="imagenet"):
+    if dataset == "imagenet":
         img_dim = 224
         out_dim = 1000
         patch_dim = 32
-    elif 'cifar' in dataset:
+    elif "cifar" in dataset:
         img_dim = 32
         out_dim = 10
         patch_dim = 4
@@ -304,12 +318,12 @@ def ViT_L32(dataset='imagenet'):
     )
 
 
-def ViT_H14(dataset='imagenet'):
-    if dataset == 'imagenet':
+def ViT_H14(dataset="imagenet"):
+    if dataset == "imagenet":
         img_dim = 224
         out_dim = 1000
         patch_dim = 14
-    elif 'cifar' in dataset:
+    elif "cifar" in dataset:
         img_dim = 32
         out_dim = 10
         patch_dim = 4
