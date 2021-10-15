@@ -20,6 +20,23 @@ from test import test_one_epoch
 import torch.nn as nn
 
 
+class StupidModel(nn.Module):
+    def __init__(self, dim_feature, output_dim):
+        super(StupidModel, self).__init__()
+
+        self.dim_feature = dim_feature
+        self.output_dim = output_dim
+        self.pre_head_ln = nn.LayerNorm(dim_feature)
+        self.mlp_head = nn.Linear(dim_feature, output_dim)
+
+    def forward(self, sequence_input_rgb, sequence_input_flow):
+        x = torch.cat((sequence_input_rgb, sequence_input_flow), 2)
+        x = x.mean(dim=1)
+        x = self.pre_head_ln(x)
+        x = self.mlp_head(x)
+        return x
+
+
 def main(args):
     utils.init_distributed_mode(args)
     command = "python " + " ".join(sys.argv)
@@ -59,20 +76,22 @@ def main(args):
     np.random.seed(seed)
     random.seed(seed)
 
-    model = transformer_models.VisionTransformer_v3(
-        args=args,
-        img_dim=args.enc_layers,  # VisionTransformer_v3
-        patch_dim=args.patch_dim,
-        out_dim=args.numclass,
-        embedding_dim=args.embedding_dim,
-        num_heads=args.num_heads,
-        num_layers=args.num_layers,
-        hidden_dim=args.hidden_dim,
-        dropout_rate=args.dropout_rate,
-        attn_dropout_rate=args.attn_dropout_rate,
-        num_channels=args.dim_feature,
-        positional_encoding_type=args.positional_encoding_type,
-    )
+    # model = transformer_models.VisionTransformer_v3(
+    #     args=args,
+    #     img_dim=args.enc_layers,  # VisionTransformer_v3
+    #     patch_dim=args.patch_dim,
+    #     out_dim=args.numclass,
+    #     embedding_dim=args.embedding_dim,
+    #     num_heads=args.num_heads,
+    #     num_layers=args.num_layers,
+    #     hidden_dim=args.hidden_dim,
+    #     dropout_rate=args.dropout_rate,
+    #     attn_dropout_rate=args.attn_dropout_rate,
+    #     num_channels=args.dim_feature,
+    #     positional_encoding_type=args.positional_encoding_type,
+    # )
+
+    model = StupidModel(dim_feature=args.dim_feature, output_dim=args.numclass)
 
     model.to(device)
 
