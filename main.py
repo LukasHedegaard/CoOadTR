@@ -78,7 +78,7 @@ def main(args):
 
     loss_need = [
         "labels_encoder",
-        "labels_decoder",
+        # "labels_decoder",
     ]
     criterion = utl.SetCriterion(
         num_classes=args.numclass, losses=loss_need, args=args

@@ -81,13 +81,13 @@ class VisionTransformer_v3(nn.Module):
         use_representation = False  # False
         if use_representation:
             self.mlp_head = nn.Sequential(
-                nn.Linear(embedding_dim + d_model, hidden_dim // 2),
+                nn.Linear(hidden_dim, hidden_dim // 2),
                 # nn.Tanh(),
                 nn.ReLU(),
                 nn.Linear(hidden_dim // 2, out_dim),
             )
         else:
-            self.mlp_head = nn.Linear(embedding_dim + d_model, out_dim)
+            self.mlp_head = nn.Linear(hidden_dim, out_dim)
 
         if self.conv_patch_representation:
             # self.conv_x = nn.Conv2d(
@@ -183,24 +183,24 @@ class VisionTransformer_v3(nn.Module):
         x = self.pre_head_ln(x)  # [128, 33, 1024]
         # x = self.after_dropout(x)  # add
         # decoder
-        decoder_cls_token = self.decoder_cls_token.expand(x.shape[0], -1, -1)
-        # decoder_cls_token = self.after_dropout(decoder_cls_token)  # add
-        # decoder_cls_token = self.decoder_position_encoding(decoder_cls_token)  # [128, 8, 1024]
-        dec = self.decoder(decoder_cls_token, x)  # [128, 8, 1024]
-        dec = self.after_dropout(dec)  # add
-        # merge_atte = self.merge_sigmoid(self.merge_fc(dec))  # [128, 8, 1]
-        # dec_for_token = (merge_atte*dec).sum(dim=1)  # [128, 1024]
-        # dec_for_token = (merge_atte*dec).sum(dim=1)/(merge_atte.sum(dim=-2) + 0.0001)
-        dec_for_token = dec.mean(dim=1)
-        # dec_for_token = dec.max(dim=1)[0]
-        dec_cls_out = self.classifier(dec)
-        # set_trace()
-        # x = self.to_cls_token(x[:, 0])
-        x = torch.cat((self.to_cls_token(x[:, -1]), dec_for_token), dim=1)
+        # decoder_cls_token = self.decoder_cls_token.expand(x.shape[0], -1, -1)
+        # # decoder_cls_token = self.after_dropout(decoder_cls_token)  # add
+        # # decoder_cls_token = self.decoder_position_encoding(decoder_cls_token)  # [128, 8, 1024]
+        # dec = self.decoder(decoder_cls_token, x)  # [128, 8, 1024]
+        # dec = self.after_dropout(dec)  # add
+        # # merge_atte = self.merge_sigmoid(self.merge_fc(dec))  # [128, 8, 1]
+        # # dec_for_token = (merge_atte*dec).sum(dim=1)  # [128, 1024]
+        # # dec_for_token = (merge_atte*dec).sum(dim=1)/(merge_atte.sum(dim=-2) + 0.0001)
+        # dec_for_token = dec.mean(dim=1)
+        # # dec_for_token = dec.max(dim=1)[0]
+        # dec_cls_out = self.classifier(dec)
+        # # set_trace()
+        # # x = self.to_cls_token(x[:, 0])
+        # x = torch.cat((self.to_cls_token(x[:, -1]), dec_for_token), dim=1)
         x = self.mlp_head(x)
         # x = F.log_softmax(x, dim=-1)
 
-        return x, dec_cls_out
+        return x[:, -1]  # x , dec_cls_out
 
     def _get_padding(self, padding_type, kernel_size):
         assert padding_type in ["SAME", "VALID"]

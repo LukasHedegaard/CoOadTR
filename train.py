@@ -76,15 +76,15 @@ def train_one_epoch(
         class_h_target = class_h_target.to(device)
         dec_target = dec_target.to(device)
 
-        enc_score_p0, dec_scores = model(camera_inputs, motion_inputs)
+        enc_score_p0 = model(camera_inputs, motion_inputs)
 
         outputs = {
             "labels_encoder": enc_score_p0,  # [128, 22]
-            "labels_decoder": dec_scores.view(-1, num_class),  # [128, 8, 22]
+            # "labels_decoder": dec_scores.view(-1, num_class),  # [128, 8, 22]
         }
         targets = {
             "labels_encoder": class_h_target.view(-1, num_class),
-            "labels_decoder": dec_target.view(-1, num_class),
+            # "labels_decoder": dec_target.view(-1, num_class),
         }
 
         loss_dict = criterion(outputs, targets)
@@ -169,16 +169,16 @@ def evaluate(model, criterion, data_loader, device, logger, args, epoch, nprocs=
         class_h_target = class_h_target_val.to(device)
         dec_target = dec_target.to(device)
 
-        enc_score_p0, dec_scores = model(camera_inputs, motion_inputs)
+        enc_score_p0 = model(camera_inputs, motion_inputs)
         # set_trace()
 
         outputs = {
             "labels_encoder": enc_score_p0,  # [128, 22]
-            "labels_decoder": dec_scores.view(-1, num_class),  # [128, 8, 22]
+            # "labels_decoder": dec_scores.view(-1, num_class),  # [128, 8, 22]
         }
         targets = {
             "labels_encoder": class_h_target.view(-1, num_class),
-            "labels_decoder": dec_target.view(-1, num_class),
+            # "labels_decoder": dec_target.view(-1, num_class),
         }
 
         loss_dict = criterion(outputs, targets)
