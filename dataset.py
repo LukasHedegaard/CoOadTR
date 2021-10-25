@@ -48,14 +48,14 @@ class TRNTHUMOSDataLayer(data.Dataset):
             if osp.exists(
                 osp.join(
                     self.pickle_root,
-                    "cox3d_s_kin_features_{}.pickle".format(self.subnet),
+                    "cox3d_l_kin_features_{}.pickle".format(self.subnet),
                 )
             ):
                 self.feature_All = pickle.load(
                     open(
                         osp.join(
                             self.pickle_root,
-                            "cox3d_s_kin_features_{}.pickle".format(self.subnet),
+                            "cox3d_l_kin_features_{}.pickle".format(self.subnet),
                         ),
                         "rb",
                     )
@@ -71,7 +71,7 @@ class TRNTHUMOSDataLayer(data.Dataset):
                     for k, v in self.feature_All.items()
                     if v.shape[2] > transient_frames + self.enc_steps
                 }
-                print("load cox3d_s_kin_features_{}.pickle !".format(self.subnet))
+                print("load cox3d_l_kin_features_{}.pickle !".format(self.subnet))
 
                 # Ensure the same number of frames in annotation
                 target_all = {
