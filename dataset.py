@@ -16,9 +16,7 @@ class TRNTHUMOSDataLayer(data.Dataset):
         self.numclass = args.numclass
         self.dec_steps = args.query_num
         self.training = phase == "train"
-        self.feature_pretrain = (
-            args.feature
-        )  # 'Anet2016_feature'   # IncepV3_feature  Anet2016_feature
+        self.feature_pretrain = args.feature  # 'Anet2016_feature'   # IncepV3_feature
         self.inputs = []
 
         self.subnet = "val" if self.training else "test"
@@ -42,33 +40,51 @@ class TRNTHUMOSDataLayer(data.Dataset):
                     "rb",
                 )
             )
-        for session in self.sessions:  # 改
-            # target = np.load(osp.join(self.data_root, 'target', session+'.npy'))  # thumos_val_anno.pickle
-            target = target_all[session]["anno"]
-            seed = np.random.randint(self.enc_steps) if self.training else 0
-            for start, end in zip(
-                range(seed, target.shape[0], 1),  # self.enc_steps
-                range(seed + self.enc_steps, target.shape[0] - self.dec_steps, 1),
-            ):
-                enc_target = target[start:end]
-                # dec_target = self.get_dec_target(target[start:end + self.dec_steps])
-                dec_target = target[end : end + self.dec_steps]
-                distance_target, class_h_target = self.get_distance_target(
-                    target[start:end]
+
+        # TODO: remove
+        target_all = {k: target_all[k] for k in self.sessions}
+
+        if "x3d" in self.feature_pretrain:
+            if osp.exists(
+                osp.join(
+                    self.pickle_root,
+                    "cox3d_s_kin_features_{}.pickle".format(self.subnet),
                 )
-                if class_h_target.argmax() != 21:
-                    self.inputs.append(
-                        [
-                            session,
-                            start,
-                            end,
-                            enc_target,
-                            distance_target,
-                            class_h_target,
-                            dec_target,
-                        ]
+            ):
+                self.feature_All = pickle.load(
+                    open(
+                        osp.join(
+                            self.pickle_root,
+                            "cox3d_s_kin_features_{}.pickle".format(self.subnet),
+                        ),
+                        "rb",
                     )
-        if "V3" in self.feature_pretrain:
+                )
+                # Preprocess: Remove transient and average spatial dimensions
+                transient_frames = 55
+                self.feature_All = {
+                    k: {
+                        "rgb": v.permute(2, 0, 1, 3, 4)
+                        .reshape(v.shape[2], -1)
+                        .squeeze()[transient_frames:]
+                    }
+                    for k, v in self.feature_All.items()
+                    if v.shape[2] > transient_frames + self.enc_steps
+                }
+                print("load cox3d_s_kin_features_{}.pickle !".format(self.subnet))
+
+                # Ensure the same number of frames in annotation
+                target_all = {
+                    k: {
+                        "anno": target_all[k]["anno"][-len(v["rgb"]) :],
+                        "feature_length": len(v["rgb"]),
+                    }
+                    for k, v in self.feature_All.items()
+                }
+
+                self.sessions = list(target_all.keys())
+
+        elif "V3" in self.feature_pretrain:
             if osp.exists(
                 osp.join(
                     self.pickle_root,
@@ -224,6 +240,35 @@ class TRNTHUMOSDataLayer(data.Dataset):
                     pickle.dump(self.feature_All, f)
                 print("dump thumos_all_feature_{}.pickle !".format(self.subnet))
 
+        for session in self.sessions:  # 改
+            # target = np.load(osp.join(self.data_root, 'target', session+'.npy'))  # thumos_val_anno.pickle
+            target = target_all[session]["anno"]
+            seed = np.random.randint(self.enc_steps) if self.training else 0
+            for start, end in zip(
+                range(seed, target.shape[0], 1),  # self.enc_steps
+                range(seed + self.enc_steps, target.shape[0] - self.dec_steps, 1),
+            ):
+                enc_target = target[start:end]
+                # dec_target = self.get_dec_target(target[start:end + self.dec_steps])
+                dec_target = target[end : end + self.dec_steps]
+                distance_target, class_h_target = self.get_distance_target(
+                    target[start:end]
+                )
+                if class_h_target.argmax() != 21:
+                    self.inputs.append(
+                        [
+                            session,
+                            start,
+                            end,
+                            enc_target,
+                            distance_target,
+                            class_h_target,
+                            dec_target,
+                        ]
+                    )
+
+        print(f"{self.subnet} dataset ready")
+
     def get_dec_target(self, target_vector):
         target_matrix = np.zeros(
             (self.enc_steps, self.dec_steps, target_vector.shape[-1])
@@ -258,10 +303,11 @@ class TRNTHUMOSDataLayer(data.Dataset):
             dec_target,
         ) = self.inputs[index]
         camera_inputs = self.feature_All[session]["rgb"][start:end]
-        camera_inputs = torch.tensor(camera_inputs)
-        motion_inputs = self.feature_All[session]["flow"][start:end]
+        # camera_inputs = torch.tensor(camera_inputs)
+        motion_inputs = self.feature_All[session]["rgb"][start:end]
+        # motion_inputs = self.feature_All[session]["flow"][start:end]
+        # motion_inputs = torch.tensor(motion_inputs)
 
-        motion_inputs = torch.tensor(motion_inputs)
         enc_target = torch.tensor(enc_target)
         distance_target = torch.tensor(distance_target)
         class_h_target = torch.tensor(class_h_target)
