@@ -65,6 +65,7 @@ class TRNTHUMOSDataLayer(data.Dataset):
                 self.feature_All = {
                     k: {
                         "rgb": v.permute(2, 0, 1, 3, 4)
+                        .mean((-1, -2))
                         .reshape(v.shape[2], -1)
                         .squeeze()[transient_frames:]
                     }

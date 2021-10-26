@@ -81,7 +81,7 @@ def get_args_parser():
         help="feature type",
     )
     parser.add_argument(
-        "--dim_feature", default=19200, type=int, help="input feature dims"
+        "--dim_feature", default=192, type=int, help="input feature dims"
     )
     parser.add_argument("--patch_dim", default=1, type=int, help="input feature dims")
     parser.add_argument(
