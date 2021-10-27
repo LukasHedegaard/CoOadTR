@@ -76,7 +76,7 @@ def get_args_parser():
     )
     parser.add_argument(
         "--feature",
-        default="cox3d_s",  # Anet2016_feature_v2
+        default="x3d_s",  # Anet2016_feature_v2
         type=str,
         help="feature type",
     )

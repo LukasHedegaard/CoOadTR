@@ -31,23 +31,23 @@ class TRNTHUMOSDataLayer(data.Dataset):
                     "rb",
                 )
             )
-        elif "x3d" in self.feature_pretrain:
-            with open(
-                osp.join(self.pickle_root, f"{self.subnet}_5.0fps.pickle"), "rb"
-            ) as f:
-                target_all = pickle.load(f)
+        # elif "x3d" in self.feature_pretrain:
+        #     with open(
+        #         osp.join(self.pickle_root, f"{self.subnet}_5.0fps.pickle"), "rb"
+        #     ) as f:
+        #         target_all = pickle.load(f)
 
-            target_all = {
-                k: {
-                    "anno": torch.nn.functional.one_hot(
-                        torch.tensor(target_all[k]), num_classes=22
-                    )
-                    .detach()
-                    .numpy(),
-                    "feature_length": len(target_all[k]),
-                }
-                for k in self.sessions
-            }
+        #     target_all = {
+        #         k: {
+        #             "anno": torch.nn.functional.one_hot(
+        #                 torch.tensor(target_all[k]), num_classes=22
+        #             )
+        #             .detach()
+        #             .numpy(),
+        #             "feature_length": len(target_all[k]),
+        #         }
+        #         for k in self.sessions
+        #     }
 
         # one-hot 22
         # {'anno': array([[1., 0., 0., ... 0., 0.]]), 'feature_length': 857}
@@ -85,7 +85,7 @@ class TRNTHUMOSDataLayer(data.Dataset):
                     )
                 )
                 # Preprocess: Remove transient and average spatial dimensions
-                transient_frames = 55
+                transient_frames = 16
                 self.feature_All = {
                     k: {
                         "rgb": v.permute(2, 0, 1, 3, 4)
