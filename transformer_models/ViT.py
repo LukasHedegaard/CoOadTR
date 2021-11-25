@@ -203,9 +203,10 @@ class VisionTransformer_v3(nn.Module):
         # # x = self.to_cls_token(x[:, 0])
         # x = torch.cat((self.to_cls_token(x[:, -1]), dec_for_token), dim=1)
         x = self.mlp_head(x)
+        x = x.mean(dim=1)
         # x = F.log_softmax(x, dim=-1)
 
-        return x[:, -1]  # x , dec_cls_out
+        return x  # x[:, -1]  # x , dec_cls_out
 
     def _get_padding(self, padding_type, kernel_size):
         assert padding_type in ["SAME", "VALID"]
