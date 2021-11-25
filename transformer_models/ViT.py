@@ -172,9 +172,9 @@ class VisionTransformer_v3(nn.Module):
             x = sequence_input_flow
 
         x = self.linear_encoding(x)
-        cls_tokens = self.cls_token.expand(x.shape[0], -1, -1)
+        # cls_tokens = self.cls_token.expand(x.shape[0], -1, -1)
         # x = torch.cat((cls_tokens, x), dim=1)
-        x = torch.cat((x, cls_tokens), dim=1)
+        # x = torch.cat((x, cls_tokens), dim=1)
         x = self.position_encoding(x)
         x = self.pe_dropout(x)  # not delete
 
