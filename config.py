@@ -91,7 +91,7 @@ def get_args_parser():
     )
     parser.add_argument(
         "--positional_encoding_type",
-        default="learned",
+        default="shifting_learned",
         type=str,
         help="fixed or learned",
     )  # learned  fixed
