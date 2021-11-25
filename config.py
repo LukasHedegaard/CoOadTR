@@ -76,12 +76,12 @@ def get_args_parser():
     )
     parser.add_argument(
         "--feature",
-        default="x3d_s",  # Anet2016_feature_v2
+        default="x3d_s_late_avg",  # Anet2016_feature_v2
         type=str,
         help="feature type",
     )
     parser.add_argument(
-        "--dim_feature", default=192, type=int, help="input feature dims"
+        "--dim_feature", default=2048, type=int, help="input feature dims"
     )
     parser.add_argument("--patch_dim", default=1, type=int, help="input feature dims")
     parser.add_argument(

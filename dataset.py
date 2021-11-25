@@ -31,23 +31,23 @@ class TRNTHUMOSDataLayer(data.Dataset):
                     "rb",
                 )
             )
-        # elif "x3d" in self.feature_pretrain:
-        #     with open(
-        #         osp.join(self.pickle_root, f"{self.subnet}_5.0fps.pickle"), "rb"
-        #     ) as f:
-        #         target_all = pickle.load(f)
+        elif "x3d" in self.feature_pretrain:
+            with open(
+                osp.join(self.pickle_root, f"{self.subnet}_5.0fps.pickle"), "rb"
+            ) as f:
+                target_all = pickle.load(f)
 
-        #     target_all = {
-        #         k: {
-        #             "anno": torch.nn.functional.one_hot(
-        #                 torch.tensor(target_all[k]), num_classes=22
-        #             )
-        #             .detach()
-        #             .numpy(),
-        #             "feature_length": len(target_all[k]),
-        #         }
-        #         for k in self.sessions
-        #     }
+            target_all = {
+                k: {
+                    "anno": torch.nn.functional.one_hot(
+                        torch.tensor(target_all[k]), num_classes=22
+                    )
+                    .detach()
+                    .numpy(),
+                    "feature_length": len(target_all[k]),
+                }
+                for k in self.sessions
+            }
 
         # one-hot 22
         # {'anno': array([[1., 0., 0., ... 0., 0.]]), 'feature_length': 857}
@@ -105,7 +105,7 @@ class TRNTHUMOSDataLayer(data.Dataset):
                 # Ensure the same number of frames in annotation
                 target_all = {
                     k: {
-                        "anno": target_all[k]["anno"][-len(v["rgb"]) :],
+                        "anno": target_all[k]["anno"][-(len(v["rgb"])) :],
                         "feature_length": len(v["rgb"]),
                     }
                     for k, v in self.feature_All.items()
@@ -277,6 +277,11 @@ class TRNTHUMOSDataLayer(data.Dataset):
                 range(seed, target.shape[0], 1),  # self.enc_steps
                 range(seed + self.enc_steps, target.shape[0] - self.dec_steps, 1),
             ):
+                # if (
+                #     self.subnet == "val"
+                #     and len(np.unique(target[start : end + self.dec_steps], axis=0)) > 1
+                # ):
+                #     continue
                 enc_target = target[start:end]
                 # dec_target = self.get_dec_target(target[start:end + self.dec_steps])
                 dec_target = target[end : end + self.dec_steps]
