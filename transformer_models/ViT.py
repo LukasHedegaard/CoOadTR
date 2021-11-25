@@ -8,6 +8,7 @@ from ipdb import set_trace
 from .PositionalEncoding import (
     FixedPositionalEncoding,
     LearnedPositionalEncoding,
+    ShiftingLearnedPositionalEncoding,
 )
 
 __all__ = ["ViT_B16", "ViT_B32", "ViT_L16", "ViT_L32", "ViT_H14"]
@@ -62,6 +63,10 @@ class VisionTransformer_v3(nn.Module):
         elif positional_encoding_type == "fixed":
             self.position_encoding = FixedPositionalEncoding(
                 self.embedding_dim,
+            )
+        if positional_encoding_type == "shifting_learned":
+            self.position_encoding = ShiftingLearnedPositionalEncoding(
+                self.seq_length, self.embedding_dim, self.seq_length
             )
         print("position encoding :", positional_encoding_type)
 
