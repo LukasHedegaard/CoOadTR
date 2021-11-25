@@ -51,7 +51,7 @@ class VisionTransformer_v3(nn.Module):
 
         # self.num_patches = int((img_dim // patch_dim) ** 2)
         self.num_patches = int(img_dim // patch_dim)
-        self.seq_length = self.num_patches + 1
+        self.seq_length = self.num_patches  # + 1 # Remove class token
         self.flatten_dim = patch_dim * patch_dim * num_channels
         self.cls_token = nn.Parameter(torch.zeros(1, 1, embedding_dim))
 

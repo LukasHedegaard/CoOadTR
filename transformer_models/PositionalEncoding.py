@@ -38,7 +38,7 @@ class LearnedPositionalEncoding(nn.Module):
             position_ids = self.position_ids[:, : self.seq_length]
 
         position_embeddings = self.pe(position_ids)
-        return x + position_embeddings[:, : x.shape[1], :]
+        return x + position_embeddings
 
 
 class ShiftingLearnedPositionalEncoding(nn.Module):
