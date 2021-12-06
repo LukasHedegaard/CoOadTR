@@ -5,9 +5,9 @@ It is a fork of the [official source](https://github.com/wangxiang1230/OadTR), w
 
 Each conducted experiment has its own branch. An overview of the ablated features and associated results is found in the table below for the TSN-Anet features:
 
-| Encoder-layers  | Decoder  | Class-token | Token-shift* | mAP (%) | branch  | command |
+| Encoder-layers  | Decoder  | Class-token | Circular encoding  | mAP (%) | branch  | command |
 | -------         | -------- | --------    | --------     | ------- | ------- | ------- |
-| 3               | ✔︎        | ✔︎           | -            | 57.8    | [main](https://github.com/LukasHedegaard/OadTR/tree/main)    | `python main.py --num_layers 3 --decoder_layers 5 --enc_layers 64`  |
+| 3               | ✔︎        | ✔︎           | -            | 57.8    | [main](https://github.com/LukasHedegaard/OadTR/tree/main) (baseline)    | `python main.py --num_layers 3 --decoder_layers 5 --enc_layers 64`  |
 | 3               | -        | ✔︎           | -            | 56.8    | [no-decoder](https://github.com/LukasHedegaard/OadTR/tree/no-decoder)    | `python main.py --num_layers 3 --enc_layers 64`  |
 | 1               | -        | ✔︎           | -            | 55.6    | [no-decoder](https://github.com/LukasHedegaard/OadTR/tree/no-decoder)    | `python main.py --num_layers 1 --enc_layers 64`  |
 | 1               | -        | -           | -            | 55.5    | [no-decoder-no-cls-token](https://github.com/LukasHedegaard/OadTR/tree/no-decoder-no-cls-token)    | `python main.py --num_layers 1 --enc_layers 64`  |
