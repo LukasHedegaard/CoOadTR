@@ -66,7 +66,7 @@ class VisionTransformer_v3(nn.Module):
             )
         if positional_encoding_type == "shifting_learned":
             self.position_encoding = ShiftingLearnedPositionalEncoding(
-                2 * self.seq_length, self.embedding_dim, 2 * self.seq_length
+                2 * self.seq_length, self.embedding_dim, self.seq_length
             )
         print("position encoding :", positional_encoding_type)
 
