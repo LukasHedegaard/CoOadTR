@@ -74,6 +74,30 @@ def main(args):
         positional_encoding_type=args.positional_encoding_type,
     )
 
+    # Compute FLOPs
+    try:
+        from ptflops import get_model_complexity_info
+
+        def input_constructor(*largs, **lkwargs):
+            return {
+                "sequence_input_rgb": torch.ones(()).new_empty(
+                    (1, args.enc_layers, args.dim_feature // 3 * 2)
+                ),
+                "sequence_input_flow": torch.ones(()).new_empty(
+                    (1, args.enc_layers, args.dim_feature // 3)
+                ),
+            }
+
+        flops, params = get_model_complexity_info(
+            model, (0, 0), input_constructor=input_constructor, as_strings=False
+        )
+        print(f"Model FLOPs: {flops}")
+        print(f"Model params: {params}")
+
+    except Exception as e:
+        print(e)
+        ...
+
     model.to(device)
 
     loss_need = [
