@@ -57,9 +57,11 @@ class ShiftingLearnedPositionalEncoding(nn.Module):
         if position_ids is None:
             position_ids = self.position_ids[:, : self.seq_length]
 
-        position_ids = (position_ids + self.index) % self.seq_length
+        if not self.training:
 
-        self.index = (self.index + 1) % self.seq_length
+            position_ids = (position_ids + self.index) % self.seq_length
+
+            self.index = (self.index + 1) % self.seq_length
 
         position_embeddings = self.pe(position_ids)
         return x + position_embeddings
