@@ -3,7 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from .decoder import Decoder, DecoderLayer
 from .attn import FullAttention, ProbAttention, AttentionLayer
-from .Transformer import TransformerModel
+from .Transformer import TransformerModel, CoTransformerModel
 from ipdb import set_trace
 from .PositionalEncoding import (
     FixedPositionalEncoding,
@@ -72,7 +72,15 @@ class VisionTransformer_v3(nn.Module):
 
         self.pe_dropout = nn.Dropout(p=self.dropout_rate)
 
-        self.encoder = TransformerModel(
+        # self.encoder = TransformerModel(
+        #     embedding_dim,
+        #     num_layers,
+        #     num_heads,
+        #     hidden_dim,
+        #     self.dropout_rate,
+        #     self.attn_dropout_rate,
+        # )
+        self.encoder = CoTransformerModel(
             embedding_dim,
             num_layers,
             num_heads,

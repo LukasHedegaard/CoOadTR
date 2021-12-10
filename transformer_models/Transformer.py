@@ -1,5 +1,7 @@
 from torch import nn
 from .Attention import SelfAttention
+import continual as co
+from continual_transformers import CoReMultiheadAttention, CoSiMultiheadAttention
 
 
 class Residual(nn.Module):
@@ -78,6 +80,51 @@ class TransformerModel(nn.Module):
 
     def forward(self, x):
         return self.net(x)
+
+
+def CoTransformerModel(
+    dim,
+    depth,
+    heads,
+    mlp_dim,
+    dropout_rate=0.1,
+    attn_dropout_rate=0.1,
+    sequence_len=64,
+):
+    assert depth in {1, 2}
+
+    layers = []
+
+    for d in range(depth):
+        CoMHA = (
+            CoReMultiheadAttention if d == 0 and depth == 2 else CoSiMultiheadAttention
+        )
+        layers.extend(
+            [
+                co.Residual(
+                    co.Sequential(
+                        co.forward_stepping(nn.LayerNorm(dim)),
+                        CoMHA(
+                            dim,
+                            heads,
+                            attn_dropout_rate,
+                            sequence_len=sequence_len,
+                            forward_returns_attn_mask=False,
+                        ),
+                        nn.Dropout(p=dropout_rate),
+                    )
+                ),
+                co.Residual(
+                    co.Sequential(
+                        co.forward_stepping(nn.LayerNorm(dim)),
+                        co.forward_stepping(FeedForward(dim, mlp_dim, dropout_rate)),
+                    )
+                ),
+            ]
+        )
+
+    net = co.Sequential(*layers)
+    return net
 
 
 def _register_ptflops():
