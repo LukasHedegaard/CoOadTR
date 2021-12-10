@@ -119,8 +119,6 @@ def main(args):
             model, device_ids=[int(iii) for iii in args.gpu.split(",")]
         )
     n_parameters = sum(p.numel() for p in model.parameters() if p.requires_grad)
-    logger.output_print("number of params: {}".format(n_parameters))
-    # logger.output_print(args)
 
     optimizer = torch.optim.Adam(
         model.parameters(),
