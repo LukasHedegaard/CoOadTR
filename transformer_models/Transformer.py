@@ -1,7 +1,8 @@
 from torch import nn
 from .Attention import SelfAttention
 import continual as co
-from continual_transformers import CoReMultiheadAttention, CoSiMultiheadAttention
+from continual_transformers.co_si_trans_enc import CoSiTransformerEncoder
+from continual_transformers.co_resi_trans_enc import CoReSiTransformerEncoder
 
 
 class Residual(nn.Module):
@@ -93,38 +94,66 @@ def CoTransformerModel(
 ):
     assert depth in {1, 2}
 
-    layers = []
-
-    for d in range(depth):
-        CoMHA = (
-            CoReMultiheadAttention if d == 0 and depth == 2 else CoSiMultiheadAttention
-        )
-        layers.extend(
-            [
-                co.Residual(
-                    co.Sequential(
-                        co.forward_stepping(nn.LayerNorm(dim)),
-                        CoMHA(
-                            dim,
-                            heads,
-                            attn_dropout_rate,
-                            sequence_len=sequence_len,
-                            forward_returns_attn_mask=False,
-                        ),
-                        nn.Dropout(p=dropout_rate),
-                    )
-                ),
-                co.Residual(
-                    co.Sequential(
-                        co.forward_stepping(nn.LayerNorm(dim)),
-                        co.forward_stepping(FeedForward(dim, mlp_dim, dropout_rate)),
-                    )
-                ),
-            ]
+    if depth == 1:
+        return CoSiTransformerEncoder(
+            sequence_len=sequence_len,
+            embed_dim=dim,
+            num_heads=heads,
+            dropout=dropout_rate,
+            in_proj_bias=False,
+            query_index=-1,
+            ff_hidden_dim=mlp_dim,
+            ff_activation=nn.GELU(),
+            device=None,
+            dtype=None,
         )
 
-    net = co.Sequential(*layers)
-    return net
+    # depth == 2
+    return CoReSiTransformerEncoder(
+        sequence_len=sequence_len,
+        embed_dim=dim,
+        num_heads=heads,
+        dropout=dropout_rate,
+        in_proj_bias=False,
+        query_index=-1,
+        ff_hidden_dim=mlp_dim,
+        ff_activation=nn.GELU(),
+        device=None,
+        dtype=None,
+    )
+
+    # layers = []
+
+    # for d in range(depth):
+    #     CoMHA = (
+    #         CoReMultiheadAttention if d == 0 and depth == 2 else CoSiMultiheadAttention
+    #     )
+    #     layers.extend(
+    #         [
+    #             co.Residual(
+    #                 co.Sequential(
+    #                     co.forward_stepping(nn.LayerNorm(dim)),
+    #                     CoMHA(
+    #                         dim,
+    #                         heads,
+    #                         attn_dropout_rate,
+    #                         sequence_len=sequence_len,
+    #                         forward_returns_attn_mask=False,
+    #                     ),
+    #                     nn.Dropout(p=dropout_rate),
+    #                 )
+    #             ),
+    #             co.Residual(
+    #                 co.Sequential(
+    #                     co.forward_stepping(nn.LayerNorm(dim)),
+    #                     co.forward_stepping(FeedForward(dim, mlp_dim, dropout_rate)),
+    #                 )
+    #             ),
+    #         ]
+    #     )
+
+    # net = co.Sequential(*layers)
+    # return net
 
 
 def _register_ptflops():
