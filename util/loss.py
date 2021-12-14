@@ -44,9 +44,6 @@ class SetCriterion(nn.Module):
         """
         target = targets.float()
 
-        if len(input.shape) > 2 and input.shape[-1] == 1:
-            input = input.squeeze(-1)
-
         if self.ignore_index >= 0:
             notice_index = [
                 i for i in range(target.shape[-1]) if i != self.ignore_index

@@ -79,7 +79,7 @@ def train_one_epoch(
         # enc_score_p0 = model(camera_inputs, motion_inputs)
         enc_score_p0 = model(
             torch.cat((camera_inputs, motion_inputs), 2).transpose(1, 2)
-        )
+        ).squeeze(-1)
 
         outputs = {
             "labels_encoder": enc_score_p0,  # [128, 22]
@@ -174,7 +174,7 @@ def evaluate(model, criterion, data_loader, device, logger, args, epoch, nprocs=
 
         enc_score_p0 = model(
             torch.cat((camera_inputs, motion_inputs), 2).transpose(1, 2)
-        )
+        ).squeeze(-1)
         # set_trace()
 
         outputs = {
