@@ -76,7 +76,10 @@ def train_one_epoch(
         class_h_target = class_h_target.to(device)
         dec_target = dec_target.to(device)
 
-        enc_score_p0 = model(camera_inputs, motion_inputs)
+        # enc_score_p0 = model(camera_inputs, motion_inputs)
+        enc_score_p0 = model(
+            torch.cat((camera_inputs, motion_inputs), 2).transpose(1, 2)
+        )
 
         outputs = {
             "labels_encoder": enc_score_p0,  # [128, 22]

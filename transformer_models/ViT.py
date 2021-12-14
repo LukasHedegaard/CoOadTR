@@ -2,17 +2,14 @@ from typing import Tuple
 import torch
 from torch.functional import Tensor
 import torch.nn as nn
-import torch.nn.functional as F
-from .decoder import Decoder, DecoderLayer
-from .attn import FullAttention, ProbAttention, AttentionLayer
 from .Transformer import TransformerModel, CoTransformerModel
-from ipdb import set_trace
 from .PositionalEncoding import (
     FixedPositionalEncoding,
     LearnedPositionalEncoding,
     ShiftingLearnedPositionalEncoding,
 )
 import continual as co
+from continual_transformers import CircularPositionalEncoding
 
 __all__ = ["ViT_B16", "ViT_B32", "ViT_L16", "ViT_L32", "ViT_H14"]
 
@@ -43,19 +40,11 @@ def CoVisionTransformer(
     seq_length = num_patches  # no class token
     flatten_dim = patch_dim * patch_dim * num_channels
 
-    linear_encoding = nn.Linear(flatten_dim, embedding_dim)
-    if positional_encoding_type == "learned":
-        position_encoding = LearnedPositionalEncoding(
-            seq_length, embedding_dim, seq_length
-        )
-    elif positional_encoding_type == "fixed":
-        position_encoding = FixedPositionalEncoding(
-            embedding_dim,
-        )
-    if positional_encoding_type == "shifting_learned":
-        position_encoding = ShiftingLearnedPositionalEncoding(
-            2 * seq_length, embedding_dim, seq_length
-        )
+    linear_encoding = co.Linear(flatten_dim, embedding_dim, channel_dim=1)
+    assert positional_encoding_type == "shifting_learned"
+    position_encoding = CircularPositionalEncoding(
+        embedding_dim, 2 * seq_length, forward_update_index_steps=1
+    )
     print("position encoding :", positional_encoding_type)
 
     pe_dropout = nn.Dropout(p=dropout_rate)
@@ -68,21 +57,10 @@ def CoVisionTransformer(
         dropout_rate,
         attn_dropout_rate,
     )
-    pre_head_ln = nn.LayerNorm(embedding_dim)
-    mlp_head = nn.Linear(hidden_dim, out_dim)
-
-    def concat_inputs(inputs: Tuple[Tensor, Tensor]) -> Tensor:
-        sequence_input_rgb, sequence_input_flow = inputs
-        if with_camera and with_motion:
-            x = torch.cat((sequence_input_rgb, sequence_input_flow), 2)
-        elif with_camera:
-            x = sequence_input_rgb
-        elif with_motion:
-            x = sequence_input_flow
-        return x
+    pre_head_ln = co.Lambda(nn.LayerNorm(embedding_dim), takes_time=False)
+    mlp_head = co.Linear(hidden_dim, out_dim, channel_dim=1)
 
     return co.Sequential(
-        co.Lambda(concat_inputs),
         linear_encoding,
         position_encoding,
         pe_dropout,
@@ -160,7 +138,6 @@ class VisionTransformer_v3(nn.Module):
         )
         self.pre_head_ln = nn.LayerNorm(embedding_dim)
 
-        d_model = args.decoder_embedding_dim
         use_representation = False  # False
         if use_representation:
             self.mlp_head = nn.Sequential(
@@ -171,24 +148,6 @@ class VisionTransformer_v3(nn.Module):
             )
         else:
             self.mlp_head = nn.Linear(hidden_dim, out_dim)
-
-        if self.conv_patch_representation:
-            self.conv_x = nn.Conv1d(
-                self.num_channels,
-                self.embedding_dim,
-                kernel_size=self.patch_dim,
-                stride=self.patch_dim,
-                padding=self._get_padding(
-                    "VALID",
-                    (self.patch_dim),
-                ),
-            )
-        else:
-            self.conv_x = None
-
-        self.to_cls_token = nn.Identity()
-        self.classifier = nn.Linear(d_model, out_dim)
-        self.after_dropout = nn.Dropout(p=self.dropout_rate)
 
     def forward(self, inputs: Tuple[Tensor, Tensor]):
         sequence_input_rgb, sequence_input_flow = inputs
