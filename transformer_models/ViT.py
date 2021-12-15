@@ -43,7 +43,9 @@ def CoVisionTransformer(
     linear_encoding = co.Linear(flatten_dim, embedding_dim, channel_dim=1)
     assert positional_encoding_type == "shifting_learned"
     position_encoding = CircularPositionalEncoding(
-        embedding_dim, 2 * seq_length, forward_update_index_steps=1
+        embedding_dim,
+        int(args.cpe_factor * embedding_dim),
+        forward_update_index_steps=1,
     )
     print("position encoding :", positional_encoding_type)
 
@@ -122,7 +124,9 @@ class VisionTransformer_v3(nn.Module):
             )
         if positional_encoding_type == "shifting_learned":
             self.position_encoding = ShiftingLearnedPositionalEncoding(
-                2 * self.seq_length, self.embedding_dim, self.seq_length
+                self.seq_length,
+                int(args.cpe_factor * self.embedding_dim),
+                self.seq_length,
             )
         print("position encoding :", positional_encoding_type)
 
