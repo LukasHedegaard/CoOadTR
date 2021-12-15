@@ -91,7 +91,7 @@ def get_args_parser():
     )
     parser.add_argument(
         "--positional_encoding_type",
-        default="learned",
+        default="shifting_learned",
         type=str,
         help="fixed or learned",
     )  # learned  fixed
@@ -151,6 +151,12 @@ def get_args_parser():
         "--dist_url",
         default="tcp://127.0.0.1:12342",
         help="url used to set up distributed training",
+    )
+    parser.add_argument(
+        "--cpe_factor",
+        default=2,
+        type=float,
+        help="Multipliples of sequence length to initialise the circular positional embeddings with",
     )
     # 'env://'
     return parser
