@@ -59,10 +59,9 @@ def main(args):
     np.random.seed(seed)
     random.seed(seed)
 
-    # model = transformer_models.VisionTransformer_v3(
-    model = transformer_models.CoVisionTransformer(
+    model = transformer_models.VisionTransformer_v3(
         args=args,
-        img_dim=args.enc_layers,
+        img_dim=args.enc_layers,  # VisionTransformer_v3
         patch_dim=args.patch_dim,
         out_dim=args.numclass,
         embedding_dim=args.embedding_dim,
@@ -79,12 +78,18 @@ def main(args):
     try:
         from ptflops import get_model_complexity_info
 
-        # Warm up model
-        model.forward_steps(torch.randn(1, args.dim_feature, args.enc_layers))
-        model.call_mode = "forward_step"
+        def input_constructor(*largs, **lkwargs):
+            return {
+                "sequence_input_rgb": torch.ones(()).new_empty(
+                    (1, args.enc_layers, args.dim_feature // 3 * 2)
+                ),
+                "sequence_input_flow": torch.ones(()).new_empty(
+                    (1, args.enc_layers, args.dim_feature // 3)
+                ),
+            }
 
         flops, params = get_model_complexity_info(
-            model, (args.dim_feature,), as_strings=False
+            model, (0, 0), input_constructor=input_constructor, as_strings=False
         )
         print(f"Model FLOPs: {flops}")
         print(f"Model params: {params}")
@@ -93,12 +98,11 @@ def main(args):
         print(e)
         ...
 
-    model.call_mode = "forward"
     model.to(device)
 
     loss_need = [
         "labels_encoder",
-        # "labels_decoder",
+        "labels_decoder",
     ]
     criterion = utl.SetCriterion(
         num_classes=args.numclass, losses=loss_need, args=args
@@ -196,7 +200,6 @@ def main(args):
     for epoch in range(args.start_epoch, args.epochs):
         if args.distributed:
             sampler_train.set_epoch(epoch)
-
         train_stats = train_one_epoch(
             model,
             criterion,

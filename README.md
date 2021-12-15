@@ -1,11 +1,23 @@
-# OadTR
-Code for our ICCV2021 paper: "OadTR: Online Action Detection with Transformers" [["Paper"]](https://arxiv.org/pdf/2106.11149.pdf)
+# OadTR ablations
+This repository contains an ablation study for the OadTR network from "OadTR: Online Action Detection with Transformers" (ICCV2021) [["Paper"]](https://arxiv.org/pdf/2106.11149.pdf).
 
-## Update
+It is a fork of the [official source](https://github.com/wangxiang1230/OadTR), with the purporse of ablating different features to make the model compatbile with [Continual Transformers](https://github.com/LukasHedegaard/continual-transformers).
 
-* July 28, 2021: Our Paper "OadTR: Online Action Detection with Transformers" was accepted by ICCV2021. At the same time, we released [THUMOS14-Kinetics feature](https://zenodo.org/record/5140603#.YQDk8britPY).  
+Each conducted experiment has its own branch. An overview of the ablated features and associated results is found in the table below for the TSN-Anet features:
 
-## Dependencies
+| Encoder-layers  | Decoder  | Class-token | Circular encoding  | mAP (%) | branch  | command |
+| -------         | -------- | --------    | --------     | ------- | ------- | ------- |
+| 3               | ✔︎        | ✔︎           | -            | 57.8    | [main](https://github.com/LukasHedegaard/OadTR/tree/main) (baseline)    | `python main.py --num_layers 3 --decoder_layers 5 --enc_layers 64`  |
+| 3               | -        | ✔︎           | -            | 56.8    | [no-decoder](https://github.com/LukasHedegaard/OadTR/tree/no-decoder)    | `python main.py --num_layers 3 --enc_layers 64`  |
+| 1               | -        | ✔︎           | -            | 55.6    | [no-decoder](https://github.com/LukasHedegaard/OadTR/tree/no-decoder)    | `python main.py --num_layers 1 --enc_layers 64`  |
+| 1               | -        | -           | -            | 55.5    | [no-decoder-no-cls-token](https://github.com/LukasHedegaard/OadTR/tree/no-decoder-no-cls-token)    | `python main.py --num_layers 1 --enc_layers 64`  |
+| 1               | -        | -           | ✔︎ (len n)        | 55.7    | [no-decoder-no-cls-token-shifting-tokens](https://github.com/LukasHedegaard/OadTR/tree/no-decoder-no-cls-token-shifting-tokens)    | `python main.py --num_layers 1 --enc_layers 64`  |
+| 1               | -        | -           | ✔︎ (len 2n)       | 55.8    | [no-decoder-no-cls-token-shifting-tokens-2x](https://github.com/LukasHedegaard/OadTR/tree/no-decoder-no-cls-token-shifting-tokens-2x)    | `python main.py --num_layers 1 --enc_layers 64`  |
+                
+
+# Set-up
+
+## Package Dependencies
 
 * pytorch==1.6.0 
 * json
@@ -13,10 +25,13 @@ Code for our ICCV2021 paper: "OadTR: Online Action Detection with Transformers" 
 * tensorboard-logger
 * torchvision==0.7.0
 
+## Pretrained features
 
-# Prepare
 * Unzip the anno file "./data/anno_thumos.zip"
-* Download the feature [THUMOS14-Anet feature](https://zenodo.org/record/5035147#.YNhWG7vitPY) (Note: [HDD](https://usa.honda-ri.com/hdd) and [TVSeries](https://homes.esat.kuleuven.be/psi-archive/rdegeest/TVSeries.html) are available by contacting the authors of the datasets and signing agreements due to the copyrights. You can use this [Repo](https://github.com/yjxiong/anet2016-cuhk) to extract features.)
+* Download the features:
+  * [THUMOS14-Anet feature](https://zenodo.org/record/5035147#.YNhWG7vitPY) 
+  * [THUMOS14-Kinetics feature](https://zenodo.org/record/5140603#.YQDk8britPY)
+  * [HDD](https://usa.honda-ri.com/hdd) and [TVSeries](https://homes.esat.kuleuven.be/psi-archive/rdegeest/TVSeries.html) are available by contacting the authors of the datasets and signing agreements due to the copyrights. You can use this [Repo](https://github.com/yjxiong/anet2016-cuhk) to extract features.
 
 # Training
 ```
@@ -27,14 +42,4 @@ python main.py --num_layers 3 --decoder_layers 5 --enc_layers 64 --output_dir mo
 python main.py --num_layers 3 --decoder_layers 5 --enc_layers 64 --output_dir models/en_3_decoder_5_lr_drop_1 --eval --resume models/en_3_decoder_5_lr_drop_1/checkpoint000{}.pth
 ```
 
-# Citing OadTR
-Please cite our paper in your publications if it helps your research:
 
-```BibTeX
-@article{wang2021oadtr,
-  title={OadTR: Online Action Detection with Transformers},
-  author={Wang, Xiang and Zhang, Shiwei and Qing, Zhiwu and Shao, Yuanjie and Zuo, Zhengrong and Gao, Changxin and Sang, Nong},
-  journal={arXiv preprint arXiv:2106.11149},
-  year={2021}
-}
-```
