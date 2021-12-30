@@ -1,5 +1,6 @@
 from torch import nn
 from .Attention import SelfAttention
+from continual_transformers import CoSiTransformerEncoder, CoReSiTransformerEncoder
 
 
 class Residual(nn.Module):
@@ -78,6 +79,46 @@ class TransformerModel(nn.Module):
 
     def forward(self, x):
         return self.net(x)
+
+
+def CoTransformerModel(
+    dim,
+    depth,
+    heads,
+    mlp_dim,
+    dropout_rate=0.1,
+    attn_dropout_rate=0.1,
+    sequence_len=64,
+):
+    assert depth in {1, 2}
+
+    if depth == 1:
+        return CoSiTransformerEncoder(
+            sequence_len=sequence_len,
+            embed_dim=dim,
+            num_heads=heads,
+            dropout=dropout_rate,
+            in_proj_bias=False,
+            query_index=-1,
+            ff_hidden_dim=mlp_dim,
+            ff_activation=nn.GELU(),
+            device=None,
+            dtype=None,
+        )
+
+    # depth == 2
+    return CoReSiTransformerEncoder(
+        sequence_len=sequence_len,
+        embed_dim=dim,
+        num_heads=heads,
+        dropout=dropout_rate,
+        in_proj_bias=False,
+        query_index=-1,
+        ff_hidden_dim=mlp_dim,
+        ff_activation=nn.GELU(),
+        device=None,
+        dtype=None,
+    )
 
 
 def _register_ptflops():
