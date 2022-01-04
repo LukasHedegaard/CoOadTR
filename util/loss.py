@@ -5,13 +5,14 @@ from ipdb import set_trace
 
 
 class SetCriterion(nn.Module):
-    """ This class computes the loss for DETR.
+    """This class computes the loss for DETR.
     The process happens in two steps:
         1) we compute hungarian assignment between ground truth boxes and the outputs of the model
         2) we supervise each pair of matched ground-truth / prediction (supervise class and box)
     """
+
     def __init__(self, num_classes, losses, args):
-        """ Create the criterion.
+        """Create the criterion.
         Parameters:
             num_classes: number of object categories, omitting the special no-object category
             matcher: module able to compute a matching between targets and proposals
@@ -25,14 +26,14 @@ class SetCriterion(nn.Module):
         self.classification_h_loss_coef = args.classification_h_loss_coef
         self.similar_loss_coef = args.similar_loss_coef
         self.weight_dict = {
-            'labels_encoder': self.classification_h_loss_coef,
-            'labels_decoder': args.classification_pred_loss_coef,
-            'labels_x0': self.classification_x_loss_coef,
-            'labels_xt': self.classification_x_loss_coef,
-            'distance': self.similar_loss_coef,
+            "labels_encoder": self.classification_h_loss_coef,
+            "labels_decoder": args.classification_pred_loss_coef,
+            "labels_x0": self.classification_x_loss_coef,
+            "labels_xt": self.classification_x_loss_coef,
+            "distance": self.similar_loss_coef,
         }
         self.losses = losses
-        self.ignore_index = 21
+        self.ignore_index = -1
         self.margin = args.margin
         self.size_average = True
         self.logsoftmax = nn.LogSoftmax(dim=1)
@@ -55,10 +56,14 @@ class SetCriterion(nn.Module):
         # logsoftmax = nn.LogSoftmax(dim=1).to(input.device)
 
         if self.ignore_index >= 0:
-            notice_index = [i for i in range(target.shape[-1]) if i != self.ignore_index]
-            output = torch.sum(-target[:, notice_index] * self.logsoftmax(input[:, notice_index]), 1)
-            if output.sum() == 0:   # 全为 ignore 类
-                loss_ce = torch.tensor(0.).to(input.device).type_as(target)
+            notice_index = [
+                i for i in range(target.shape[-1]) if i != self.ignore_index
+            ]
+            output = torch.sum(
+                -target[:, notice_index] * self.logsoftmax(input[:, notice_index]), 1
+            )
+            if output.sum() == 0:  # 全为 ignore 类
+                loss_ce = torch.tensor(0.0).to(input.device).type_as(target)
             else:
                 loss_ce = torch.mean(output[target[:, self.ignore_index] != 1])
         else:
@@ -67,7 +72,7 @@ class SetCriterion(nn.Module):
                 loss_ce = torch.mean(output)
             else:
                 loss_ce = torch.sum(output)
-        if torch.isnan(loss_ce).sum()>0:
+        if torch.isnan(loss_ce).sum() > 0:
             set_trace()
         losses = {name: loss_ce}
 
@@ -89,12 +94,16 @@ class SetCriterion(nn.Module):
         # loss_ce = F.cross_entropy(outputs, targets, ignore_index=21)
         target = targets.float()
         # logsoftmax = nn.LogSoftmax(dim=1).to(input.device)
-        ignore_index = 21  # -1 改为21 更好一点
+        ignore_index = -1  # -1 改为21 更好一点
         if ignore_index >= 0:
-            notice_index = [i for i in range(target.shape[-1]) if i != self.ignore_index]
-            output = torch.sum(-target[:, notice_index] * self.logsoftmax(input[:, notice_index]), 1)
-            if output.sum() == 0:   # 全为 ignore 类
-                loss_ce = torch.tensor(0.).to(input.device).type_as(target)
+            notice_index = [
+                i for i in range(target.shape[-1]) if i != self.ignore_index
+            ]
+            output = torch.sum(
+                -target[:, notice_index] * self.logsoftmax(input[:, notice_index]), 1
+            )
+            if output.sum() == 0:  # 全为 ignore 类
+                loss_ce = torch.tensor(0.0).to(input.device).type_as(target)
             else:
                 loss_ce = torch.mean(output[target[:, self.ignore_index] != 1])
         else:
@@ -103,7 +112,7 @@ class SetCriterion(nn.Module):
                 loss_ce = torch.mean(output)
             else:
                 loss_ce = torch.sum(output)
-        if torch.isnan(loss_ce).sum()>0:
+        if torch.isnan(loss_ce).sum() > 0:
             set_trace()
         losses = {name: loss_ce}
 
@@ -116,26 +125,29 @@ class SetCriterion(nn.Module):
         """
         output1, output2 = output
         euclidean_distance = F.pairwise_distance(output1, output2, keepdim=True)
-        loss_contrastive = torch.mean((1.-label) * torch.pow(euclidean_distance, 2) +
-                                      (label) * torch.pow(torch.clamp(self.margin - euclidean_distance, min=0.0), 2))
-        if torch.isnan(loss_contrastive).sum()>0:
+        loss_contrastive = torch.mean(
+            (1.0 - label) * torch.pow(euclidean_distance, 2)
+            + (label)
+            * torch.pow(torch.clamp(self.margin - euclidean_distance, min=0.0), 2)
+        )
+        if torch.isnan(loss_contrastive).sum() > 0:
             set_trace()
         losses = {name: loss_contrastive.double()}
         return losses
 
     def get_loss(self, loss, outputs, targets):
         loss_map = {
-            'labels_encoder': self.loss_labels,
-            'labels_decoder': self.loss_labels_decoder,
-            'labels_x0': self.loss_labels,
-            'labels_xt': self.loss_labels,
-            'distance': self.contrastive_loss,
+            "labels_encoder": self.loss_labels,
+            "labels_decoder": self.loss_labels_decoder,
+            "labels_x0": self.loss_labels,
+            "labels_xt": self.loss_labels,
+            "distance": self.contrastive_loss,
         }
-        assert loss in loss_map, f'do you really want to compute {loss} loss?'
+        assert loss in loss_map, f"do you really want to compute {loss} loss?"
         return loss_map[loss](outputs, targets, name=loss)
 
     def forward(self, outputs, targets):
-        """ This performs the loss computation.
+        """This performs the loss computation.
         Parameters:
              outputs: dict of tensors, see the output specification of the model for the format
              targets: list of dicts, such that len(targets) == batch_size.
