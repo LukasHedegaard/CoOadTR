@@ -58,7 +58,6 @@ def train_one_epoch(
     # metric_logger.add_meter('class_error', utils.SmoothedValue(window_size=1, fmt='{value:.2f}'))
     header = "Epoch: [{}]".format(epoch)
     print_freq = 50
-    num_class = 22
     for (
         camera_inputs,
         motion_inputs,
@@ -80,11 +79,11 @@ def train_one_epoch(
 
         outputs = {
             "labels_encoder": enc_score_p0,  # [128, 22]
-            # "labels_decoder": dec_scores.view(-1, num_class),  # [128, 8, 22]
+            # "labels_decoder": dec_scores,  # [128, 8, 22]
         }
         targets = {
-            "labels_encoder": class_h_target.view(-1, num_class),
-            # "labels_decoder": dec_target.view(-1, num_class),
+            "labels_encoder": class_h_target,
+            "labels_decoder": dec_target,
         }
 
         loss_dict = criterion(outputs, targets)
@@ -261,9 +260,11 @@ def evaluate(model, criterion, data_loader, device, logger, args, epoch, nprocs=
             logger.output_print(str(all_classes.shape))  # (21, 180489)
             results = {"probs": all_probs, "labels": all_classes}
 
-            map, aps, _, _ = utils.frame_level_map_n_cap(results)
+            map, aps, cap, _ = utils.frame_level_map_n_cap(results)
             logger.output_print(
-                "[Epoch-{}] [IDU-{}] mAP: {:.4f}\n".format(epoch, feat_type, map)
+                "[Epoch-{}] [IDU-{}] mAP: {:.4f}, mcAP: {:.4f}\n".format(
+                    epoch, feat_type, map, cap
+                )
             )
 
             for i, ap in enumerate(aps):
@@ -278,9 +279,11 @@ def evaluate(model, criterion, data_loader, device, logger, args, epoch, nprocs=
         logger.output_print(str(all_classes.shape))  # (21, 180489)
         results = {"probs": all_probs, "labels": all_classes}
 
-        map, aps, _, _ = utils.frame_level_map_n_cap(results)
+        map, aps, cap, _ = utils.frame_level_map_n_cap(results)
         logger.output_print(
-            "[Epoch-{}] [IDU-{}] mAP: {:.4f}\n".format(epoch, feat_type, map)
+            "[Epoch-{}] [IDU-{}] mAP: {:.4f}, mcAP: {:.4f}\n".format(
+                epoch, feat_type, map, cap
+            )
         )
 
         # results_dec = {}

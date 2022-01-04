@@ -115,6 +115,9 @@ def get_args_parser():
     parser.add_argument("--margin", default=1.0, type=float)
 
     # dataset parameters
+    parser.add_argument(
+        "--dataset", default="thumos", type=str, help="thumos or tvseries"
+    )
     parser.add_argument("--dataset_file", type=str, default="data/data_info_new.json")
     parser.add_argument("--frozen_weights", type=str, default=None)
     parser.add_argument(
