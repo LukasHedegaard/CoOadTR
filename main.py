@@ -14,7 +14,7 @@ import os
 import utils
 
 import transformer_models
-from dataset import TRNTHUMOSDataLayer
+from dataset import TRNTHUMOSDataLayer, TRNTVSeriesDataLayer
 from train import train_one_epoch, evaluate
 from test import test_one_epoch
 import torch.nn as nn
@@ -123,8 +123,11 @@ def main(args):
     )
     lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer, args.lr_drop)
 
-    dataset_train = TRNTHUMOSDataLayer(phase="train", args=args)
-    dataset_val = TRNTHUMOSDataLayer(phase="test", args=args)
+    DataLayer = {"thumos": TRNTHUMOSDataLayer, "tvseries": TRNTVSeriesDataLayer}[
+        args.dataset
+    ]
+    dataset_train = DataLayer(phase="train", args=args)
+    dataset_val = DataLayer(phase="test", args=args)
 
     if args.distributed:
         sampler_train = DistributedSampler(dataset_train)
@@ -259,7 +262,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     # args.dataset = osp.basename(osp.normpath(args.data_root)).upper()
     with open(args.dataset_file, "r") as f:
-        data_info = json.load(f)["THUMOS"]
+        data_info = json.load(f)[args.dataset.upper()]
     args.train_session_set = data_info["train_session_set"]
     args.test_session_set = data_info["test_session_set"]
     args.class_index = data_info["class_index"]
