@@ -33,7 +33,7 @@ class SetCriterion(nn.Module):
             "distance": self.similar_loss_coef,
         }
         self.losses = losses
-        self.ignore_index = 21
+        self.ignore_index = 21 if num_classes == 21 else -1  # ignore only in Thumos
         self.margin = args.margin
         self.size_average = True
         self.logsoftmax = nn.LogSoftmax(dim=1)
@@ -72,8 +72,7 @@ class SetCriterion(nn.Module):
         targets dicts must contain the key "labels" containing a tensor of dim [nb_target_boxes]
         """
         target = targets.float()
-        ignore_index = 21
-        if ignore_index >= 0:
+        if self.ignore_index >= 0:
             notice_index = [
                 i for i in range(target.shape[-1]) if i != self.ignore_index
             ]
