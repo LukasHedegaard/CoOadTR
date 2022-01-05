@@ -157,7 +157,7 @@ def get_args_parser():
     )
     parser.add_argument(
         "--cpe_factor",
-        default=2,
+        default=1,
         type=float,
         help="Multipliples of sequence length to initialise the circular positional embeddings with",
     )
