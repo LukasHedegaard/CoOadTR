@@ -25,13 +25,14 @@ pip install --upgrade git+https://github.com/LukasHedegaard/continual-transforme
 * Download the features:
   * [THUMOS14-Anet feature](https://zenodo.org/record/5035147#.YNhWG7vitPY) 
   * [THUMOS14-Kinetics feature](https://zenodo.org/record/5140603#.YQDk8britPY)
-  * [HDD](https://usa.honda-ri.com/hdd) and [TVSeries](https://homes.esat.kuleuven.be/psi-archive/rdegeest/TVSeries.html) are available by contacting the authors of the datasets and signing agreements due to the copyrights. You can use this [Repo](https://github.com/yjxiong/anet2016-cuhk) to extract features.
+  * [TVSeries](https://homes.esat.kuleuven.be/psi-archive/rdegeest/TVSeries.html) is available by contacting the authors of the datasets and signing agreements due to the copyrights. Following [this guide](https://github.com/LukasHedegaard/mmaction2/tree/tvseries-feature-extraction/tools/data/tvseries), we extracted features using TSN ResNet-50 RGB and Flow models pretrained on [ActivityNet](https://github.com/open-mmlab/mmaction2/blob/master/configs/recognition/tsn/README.md#activitynet-v13) and [Kinetics](https://github.com/open-mmlab/mmaction2/blob/master/configs/recognition/tsn/README.md#kinetics-400).
 
 When you have downloaded and placed the THUMOS featues under `~/data`, you can select the features by appending the following to your python command:
 - ActivityNet (default): 
   - `--features Anet2016_feature_v2`
 - Kinetics:
   - `--features V3`
+
 
 # Experiments
 ## CoOadTR
@@ -56,3 +57,25 @@ Each conducted experiment has its own branch. An overview of the ablated feature
 | 1               | -        | -           | ✔︎ (len 2n)       | 55.8    | [no-decoder-no-cls-token-shifting-tokens-2x](https://github.com/LukasHedegaard/OadTR/tree/no-decoder-no-cls-token-shifting-tokens-2x)    | `python main.py --num_layers 1 --enc_layers 64`  |
                 
 
+## THUMOS
+| Model         | branch                | command               |
+| -------       | -------               | -------               |
+| OadTR         | [original](https://github.com/LukasHedegaard/OadTR/tree/original)   | `python main.py --num_layers 3 --decoder_layers 5 --enc_layers 64   --features <FEATURES>`  |
+| OadTR-b2      | [no-decoder-no-cls-token](https://github.com/LukasHedegaard/OadTR/tree/no-decoder-no-cls-token)   | `python main.py --num_layers 2 --enc_layers 64 --features <FEATURES>`  |
+| OadTR-b2      | [no-decoder-no-cls-token](https://github.com/LukasHedegaard/OadTR/tree/no-decoder-no-cls-token)   | `python main.py --num_layers 1 --enc_layers 64 --features <FEATURES>`  |
+| CoOadTR-b2    | [main](https://github.com/LukasHedegaard/CoOadTR/tree/main)   | `python main.py --num_layers 2 --enc_layers 64 --features <FEATURES>`  |
+| CoOadTR-b1    | [main](https://github.com/LukasHedegaard/CoOadTR/tree/main)   | `python main.py --num_layers 2 --enc_layers 64 --features <FEATURES>`  |
+
+Where `<FEATURES>` is either `"Anet2016_feature_v2"` or `"V3"` for ActivityNet and Kinetics pretrained features, respectively.
+
+
+## TVSeries
+| Model         | branch                | command               |
+| -------       | -------               | -------               |
+| OadTR         | [original-tvseries](https://github.com/LukasHedegaard/CoOadTR/tree/original-tvseries)   | `python main.py --num_layers 3 --decoder_layers 5 --enc_layers 64   --features <FEATURES>`  |
+| OadTR-b2      | [no-decoder-no-cls-token-tvseries](https://github.com/LukasHedegaard/CoOadTR/tree/no-decoder-no-cls-token-tvseries)   | `python main.py --num_layers 2 --enc_layers 64 --features <FEATURES>`  |
+| OadTR-b2      | [no-decoder-no-cls-token-tvseries](https://github.com/LukasHedegaard/CoOadTR/tree/no-decoder-no-cls-token-tvseries)   | `python main.py --num_layers 1 --enc_layers 64 --features <FEATURES>`  |
+| CoOadTR-b2    | [main](https://github.com/LukasHedegaard/CoOadTR/tree/main)   | `python main.py --dataset tvseries --num_layers 2 --enc_layers 64 --features <FEATURES>`  |
+| CoOadTR-b1    | [main](https://github.com/LukasHedegaard/CoOadTR/tree/main)   | `python main.py --dataset tvseries --num_layers 2 --enc_layers 64 --features <FEATURES>`  |
+
+Where `<FEATURES>` is the name of your `.pickle` file of extracted features (either A.Net or Kin. features), placed in the `~/data` folder.
