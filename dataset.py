@@ -148,6 +148,7 @@ class TRNTHUMOSDataLayer(data.Dataset):
         self.inputs = []
 
         self.subnet = "val" if self.training else "test"
+        self.with_audio = "audio" in self.feature_pretrain
         self.resize = args.resize_feature
         if self.resize:
             target_all = pickle.load(
@@ -169,7 +170,6 @@ class TRNTHUMOSDataLayer(data.Dataset):
                 )
             )
         for session in self.sessions:  # 改
-            # target = np.load(osp.join(self.data_root, 'target', session+'.npy'))  # thumos_val_anno.pickle
             target = target_all[session]["anno"]
             seed = np.random.randint(self.enc_steps) if self.training else 0
             for start, end in zip(
@@ -194,161 +194,21 @@ class TRNTHUMOSDataLayer(data.Dataset):
                             dec_target,
                         ]
                     )
-        if "V3" in self.feature_pretrain:
-            if osp.exists(
-                osp.join(
-                    self.pickle_root,
-                    "thumos_all_feature_{}_V3.pickle".format(self.subnet),
-                )
-            ):
-                self.feature_All = pickle.load(
-                    open(
-                        osp.join(
-                            self.pickle_root,
-                            "thumos_all_feature_{}_V3.pickle".format(self.subnet),
-                        ),
-                        "rb",
-                    )
-                )
-                print("load thumos_all_feature_{}_V3.pickle !".format(self.subnet))
-            else:
-                self.feature_All = {}
-                for session in self.sessions:
-                    self.feature_All[session] = {}
-                    self.feature_All[session]["rgb"] = np.load(
-                        osp.join(
-                            self.data_root, self.feature_pretrain, session + "_rgb.npy"
-                        )
-                    )
-                    self.feature_All[session]["flow"] = np.load(
-                        osp.join(
-                            self.data_root, self.feature_pretrain, session + "_flow.npy"
-                        )
-                    )
-                with open(
-                    osp.join(
-                        self.pickle_root,
-                        "thumos_all_feature_{}_V3.pickle".format(self.subnet),
-                    ),
-                    "wb",
-                ) as f:
-                    pickle.dump(self.feature_All, f)
-                print("dump thumos_all_feature_{}_V3.pickle !".format(self.subnet))
-        elif "Anet2016_feature_v2" in self.feature_pretrain:
-            if self.resize:
-                if osp.exists(
-                    osp.join(
-                        self.pickle_root,
-                        "thumos_all_feature_{}_tsn_v2_resize.pickle".format(
-                            self.subnet
-                        ),
-                    )
-                ):
-                    self.feature_All = pickle.load(
-                        open(
-                            osp.join(
-                                self.pickle_root,
-                                "thumos_all_feature_{}_tsn_v2_resize.pickle".format(
-                                    self.subnet
-                                ),
-                            ),
-                            "rb",
-                        )
-                    )
-                    print(
-                        "load thumos_all_feature_{}_tsn_v2_resize.pickle !".format(
-                            self.subnet
-                        )
-                    )
-            else:
-                if osp.exists(
-                    osp.join(
-                        self.pickle_root,
-                        "thumos_all_feature_{}_tsn_v2.pickle".format(self.subnet),
-                    )
-                ):
-                    self.feature_All = pickle.load(
-                        open(
-                            osp.join(
-                                self.pickle_root,
-                                "thumos_all_feature_{}_tsn_v2.pickle".format(
-                                    self.subnet
-                                ),
-                            ),
-                            "rb",
-                        )
-                    )
-                    print(
-                        "load thumos_all_feature_{}_tsn_v2.pickle !".format(self.subnet)
-                    )
-                else:
-                    self.feature_All = {}
-                    for session in self.sessions:
-                        self.feature_All[session] = {}
-                        self.feature_All[session]["rgb"] = np.load(
-                            osp.join(
-                                self.data_root,
-                                self.feature_pretrain,
-                                session + "_rgb.npy",
-                            )
-                        )
-                        self.feature_All[session]["flow"] = np.load(
-                            osp.join(
-                                self.data_root,
-                                self.feature_pretrain,
-                                session + "_flow.npy",
-                            )
-                        )
-                    with open(
-                        osp.join(
-                            self.pickle_root,
-                            "thumos_all_feature_{}_tsn_v2.pickle".format(self.subnet),
-                        ),
-                        "wb",
-                    ) as f:
-                        pickle.dump(self.feature_All, f)
-                    print(
-                        "dump thumos_all_feature_{}_tsn_v2.pickle !".format(self.subnet)
-                    )
+
+        file_prefix = "thumos_"
+        if "kin" in self.feature_pretrain:
+            file_prefix += "kin_"
         else:
-            if osp.exists(
-                osp.join(
-                    self.pickle_root, "thumos_all_feature_{}.pickle".format(self.subnet)
-                )
-            ):
-                self.feature_All = pickle.load(
-                    open(
-                        osp.join(
-                            self.pickle_root,
-                            "thumos_all_feature_{}.pickle".format(self.subnet),
-                        ),
-                        "rb",
-                    )
-                )
-                print("load thumos_all_feature_{}.pickle !".format(self.subnet))
-            else:
-                self.feature_All = {}
-                for session in self.sessions:
-                    self.feature_All[session] = {}
-                    self.feature_All[session]["rgb"] = np.load(
-                        osp.join(
-                            self.data_root, self.feature_pretrain, session + "_rgb.npy"
-                        )
-                    )
-                    self.feature_All[session]["flow"] = np.load(
-                        osp.join(
-                            self.data_root, self.feature_pretrain, session + "_flow.npy"
-                        )
-                    )
-                with open(
-                    osp.join(
-                        self.pickle_root,
-                        "thumos_all_feature_{}.pickle".format(self.subnet),
-                    ),
-                    "wb",
-                ) as f:
-                    pickle.dump(self.feature_All, f)
-                print("dump thumos_all_feature_{}.pickle !".format(self.subnet))
+            assert "anet" in self.feature_pretrain
+            file_prefix += "anet_"
+
+        if self.with_audio:
+            file_prefix += "plus_audio_"
+
+        file_path = osp.join(self.pickle_root, f"{file_prefix}{self.subnet}.pickle")
+        assert osp.exists(file_path)
+        self.feature_All = pickle.load(open(file_path, "rb"))
+        print(f"Loaded {file_path}")
 
     def get_dec_target(self, target_vector):
         target_matrix = np.zeros(
@@ -387,6 +247,13 @@ class TRNTHUMOSDataLayer(data.Dataset):
         camera_inputs = torch.tensor(camera_inputs)
         motion_inputs = self.feature_All[session]["flow"][start:end]
         motion_inputs = torch.tensor(motion_inputs)
+
+        # A bit dirty: To avoid downstream modifications, we'll merge audio into flow
+        if self.with_audio:
+            audio_inputs = self.feature_All[session]["audio"][start:end]
+            audio_inputs = torch.tensor(audio_inputs)
+            motion_inputs = torch.concat((motion_inputs, audio_inputs), dim=1)
+
         enc_target = torch.tensor(enc_target)
         distance_target = torch.tensor(distance_target)
         class_h_target = torch.tensor(class_h_target)
