@@ -29,9 +29,9 @@ pip install --upgrade git+https://github.com/LukasHedegaard/continual-transforme
 
 When you have downloaded and placed the THUMOS featues under `~/data`, you can select the features by appending the following to your python command:
 - ActivityNet (default): 
-  - `--features Anet2016_feature_v2`
+  - `--feature Anet2016_feature_v2`
 - Kinetics:
-  - `--features V3`
+  - `--feature V3`
 
 
 # Experiments
@@ -60,22 +60,23 @@ Each conducted experiment has its own branch. An overview of the ablated feature
 ## THUMOS
 | Model         | branch                | command               |
 | -------       | -------               | -------               |
-| OadTR         | [original](https://github.com/LukasHedegaard/OadTR/tree/original)   | `python main.py --num_layers 3 --decoder_layers 5 --enc_layers 64   --features <FEATURES>`  |
-| OadTR-b2      | [no-decoder-no-cls-token](https://github.com/LukasHedegaard/OadTR/tree/no-decoder-no-cls-token)   | `python main.py --num_layers 2 --enc_layers 64 --features <FEATURES>`  |
-| OadTR-b2      | [no-decoder-no-cls-token](https://github.com/LukasHedegaard/OadTR/tree/no-decoder-no-cls-token)   | `python main.py --num_layers 1 --enc_layers 64 --features <FEATURES>`  |
-| CoOadTR-b2    | [main](https://github.com/LukasHedegaard/CoOadTR/tree/main)   | `python main.py --num_layers 2 --enc_layers 64 --features <FEATURES>`  |
-| CoOadTR-b1    | [main](https://github.com/LukasHedegaard/CoOadTR/tree/main)   | `python main.py --num_layers 2 --enc_layers 64 --features <FEATURES>`  |
+| OadTR         | [original](https://github.com/LukasHedegaard/OadTR/tree/original)   | `python main.py --num_layers 3 --decoder_layers 5 --enc_layers 64  --feature <FEATURE>`  |
+| OadTR-b2      | [no-decoder-no-cls-token](https://github.com/LukasHedegaard/OadTR/tree/no-decoder-no-cls-token)   | `python main.py --num_layers 2 --enc_layers 64 --feature <FEATURE>`  |
+| OadTR-b2      | [no-decoder-no-cls-token](https://github.com/LukasHedegaard/OadTR/tree/no-decoder-no-cls-token)   | `python main.py --num_layers 1 --enc_layers 64 --feature <FEATURE>`  |
+| CoOadTR-b2    | [main](https://github.com/LukasHedegaard/CoOadTR/tree/main)   | `python main.py --num_layers 2 --enc_layers 64 --feature <FEATURE>`  |
+| CoOadTR-b1    | [main](https://github.com/LukasHedegaard/CoOadTR/tree/main)   | `python main.py --num_layers 1 --enc_layers 64 --feature <FEATURE>`  |
 
-Where `<FEATURES>` is either `"Anet2016_feature_v2"` or `"V3"` for ActivityNet and Kinetics pretrained features, respectively.
+Where `<FEATURE>` is either `"anet"` or `"kin"` for ActivityNet and Kinetics pretrained features, respectively.
+`--dim_feature` should be `3072` for `"anet"` , and `4096` for `"kin"`.
 
 
 ## TVSeries
 | Model         | branch                | command               |
 | -------       | -------               | -------               |
-| OadTR         | [original-tvseries](https://github.com/LukasHedegaard/CoOadTR/tree/original-tvseries)   | `python main.py --num_layers 3 --decoder_layers 5 --enc_layers 64   --features <FEATURES>`  |
-| OadTR-b2      | [no-decoder-no-cls-token-tvseries](https://github.com/LukasHedegaard/CoOadTR/tree/no-decoder-no-cls-token-tvseries)   | `python main.py --num_layers 2 --enc_layers 64 --features <FEATURES>`  |
-| OadTR-b2      | [no-decoder-no-cls-token-tvseries](https://github.com/LukasHedegaard/CoOadTR/tree/no-decoder-no-cls-token-tvseries)   | `python main.py --num_layers 1 --enc_layers 64 --features <FEATURES>`  |
-| CoOadTR-b2    | [main](https://github.com/LukasHedegaard/CoOadTR/tree/main)   | `python main.py --dataset tvseries --num_layers 2 --enc_layers 64 --features <FEATURES>`  |
-| CoOadTR-b1    | [main](https://github.com/LukasHedegaard/CoOadTR/tree/main)   | `python main.py --dataset tvseries --num_layers 2 --enc_layers 64 --features <FEATURES>`  |
+| OadTR         | [original-tvseries](https://github.com/LukasHedegaard/CoOadTR/tree/original-tvseries)   | `python main.py --num_layers 3 --decoder_layers 5 --enc_layers 64   --feature <FEATURE>`  |
+| OadTR-b2      | [no-decoder-no-cls-token-tvseries](https://github.com/LukasHedegaard/CoOadTR/tree/no-decoder-no-cls-token-tvseries)   | `python main.py --num_layers 2 --enc_layers 64 --feature <FEATURE>`  |
+| OadTR-b2      | [no-decoder-no-cls-token-tvseries](https://github.com/LukasHedegaard/CoOadTR/tree/no-decoder-no-cls-token-tvseries)   | `python main.py --num_layers 1 --enc_layers 64 --feature <FEATURE>`  |
+| CoOadTR-b2    | [main](https://github.com/LukasHedegaard/CoOadTR/tree/main)   | `python main.py --dataset tvseries --num_layers 2 --enc_layers 64 --feature <FEATURE>`  |
+| CoOadTR-b1    | [main](https://github.com/LukasHedegaard/CoOadTR/tree/main)   | `python main.py --dataset tvseries --num_layers 1 --enc_layers 64 --feature <FEATURE>`  |
 
-Where `<FEATURES>` is the name of your `.pickle` file of extracted features (either A.Net or Kin. features), placed in the `~/data` folder.
+Where `<FEATURE>` is the name of your `.pickle` file of extracted features (either A.Net or Kin. features), placed in the `~/data` folder.
