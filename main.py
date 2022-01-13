@@ -81,10 +81,10 @@ def main(args):
         def input_constructor(*largs, **lkwargs):
             return {
                 "sequence_input_rgb": torch.ones(()).new_empty(
-                    (1, args.enc_layers, args.dim_feature // 3 * 2)
+                    (1, args.enc_layers, 2048)
                 ),
                 "sequence_input_flow": torch.ones(()).new_empty(
-                    (1, args.enc_layers, args.dim_feature // 3)
+                    (1, args.enc_layers, args.dim_feature - 2048)
                 ),
             }
 
