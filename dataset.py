@@ -252,7 +252,8 @@ class TRNTHUMOSDataLayer(data.Dataset):
         if self.with_audio:
             audio_inputs = self.feature_All[session]["audio"][start:end]
             audio_inputs = torch.tensor(audio_inputs)
-            motion_inputs = torch.concat((motion_inputs, audio_inputs), dim=1)
+            # motion_inputs = torch.concat((motion_inputs, audio_inputs), dim=1)
+            motion_inputs = audio_inputs
 
         enc_target = torch.tensor(enc_target)
         distance_target = torch.tensor(distance_target)
