@@ -16,10 +16,6 @@ class TRNTVSeriesDataLayer(data.Dataset):
         self.dec_steps = args.query_num
         self.training = phase == "train"
         self.feature_pretrain = args.feature
-        assert (Path(self.pickle_root) / self.feature_pretrain).suffix in {
-            ".pickle",
-            ".pkl",
-        }
         self.inputs = []
 
         # Load anno
@@ -32,12 +28,65 @@ class TRNTVSeriesDataLayer(data.Dataset):
 
         # Load features
         assert osp.exists(osp.join(self.pickle_root, self.feature_pretrain))
-        self.feature_All = pickle.load(
-            open(
-                osp.join(self.pickle_root, self.feature_pretrain),
-                "rb",
+        if "co3d" in self.feature_pretrain:
+            feature_cox3d = pickle.load(
+                open(
+                    osp.join(
+                        self.pickle_root,
+                        "co3d/cox3d_s_tvseries.pickle",
+                    ),
+                    "rb",
+                )
             )
-        )
+            feature_cox3d = {
+                k: v.squeeze(0).transpose(0, 1) for k, v in feature_cox3d.items()
+            }
+            feature_effnet = pickle.load(
+                open(
+                    osp.join(
+                        self.pickle_root,
+                        "co3d/efficientnet_b5_tvseries.pickle",
+                    ),
+                    "rb",
+                )
+            )
+
+            sample_name = next(iter(feature_cox3d))
+            transient_frames = (
+                feature_effnet[sample_name].shape[0]
+                - feature_cox3d[sample_name].shape[0]
+            )
+
+            self.feature_All = {
+                k: {
+                    "rgb": feature_effnet[k][transient_frames:],
+                    "flow": feature_cox3d[k],
+                }
+                for k in feature_cox3d
+            }
+
+            print(
+                f"loaded co3d features with dim_size {feature_effnet[sample_name].shape[1]} + {feature_cox3d[sample_name].shape[1]} = {feature_effnet[sample_name].shape[1] + feature_cox3d[sample_name].shape[1]}"
+            )
+
+            # Ensure the same number of frames in annotation
+            target_all = {
+                k: target_all[k][-(len(v["rgb"])) :]
+                for k, v in self.feature_All.items()
+            }
+
+            self.sessions = list(target_all.keys())
+        else:
+            assert (Path(self.pickle_root) / self.feature_pretrain).suffix in {
+                ".pickle",
+                ".pkl",
+            }
+            self.feature_All = pickle.load(
+                open(
+                    osp.join(self.pickle_root, self.feature_pretrain),
+                    "rb",
+                )
+            )
 
         # Ensure that features and annotataions have same length
         for k, v in self.feature_All.items():
