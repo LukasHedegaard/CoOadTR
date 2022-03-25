@@ -131,6 +131,59 @@ def train_one_epoch(
 
 
 @torch.no_grad()
+def benchmark_memory(
+    model, criterion, data_loader, device, logger, args, epoch, nprocs=4
+):
+    model.eval()
+    criterion.eval()
+
+    metric_logger = utils.MetricLogger(delimiter="  ")
+    # metric_logger.add_meter('class_error', utils.SmoothedValue(window_size=1, fmt='{value:.2f}'))
+    header = "Test:"
+    dec_score_metrics_every = {}
+    dec_target_metrics_every = {}
+    num_query = args.query_num
+    for iii in range(num_query):
+        dec_score_metrics_every[str(iii)] = []
+        dec_target_metrics_every[str(iii)] = []
+    #
+
+    for (
+        camera_inputs_val,
+        motion_inputs_val,
+        enc_target_val,
+        distance_target_val,
+        class_h_target_val,
+        dec_target,
+    ) in metric_logger.log_every(data_loader, 50, header):
+        with torch.no_grad():
+            camera_inputs = camera_inputs_val.to(device)
+            motion_inputs = motion_inputs_val.to(device)
+
+            model_device = next(model.parameters()).device
+            assert model_device.type == "cuda"
+
+            torch.cuda.reset_peak_memory_stats(device=model_device)
+            pre_mem = torch.cuda.memory_allocated(device=model_device)
+
+            if hasattr(model, "forward_mode"):
+                model(camera_inputs, motion_inputs)
+            else:
+                model(camera_inputs, motion_inputs)
+
+            print(torch.cuda.memory_summary(device=model_device, abbreviated=True))
+
+            post_mem = torch.cuda.memory_allocated(device=model_device)
+            max_mem = torch.cuda.max_memory_allocated(device=model_device)
+
+            print(
+                f"Memory stats: pre_mem: {pre_mem}, max_mem: {max_mem}, post_mem: {post_mem}"
+            )
+
+            break
+
+
+@torch.no_grad()
 def evaluate(model, criterion, data_loader, device, logger, args, epoch, nprocs=4):
 
     model.eval()

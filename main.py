@@ -15,7 +15,7 @@ import utils
 
 import transformer_models
 from dataset import TRNTHUMOSDataLayer
-from train import train_one_epoch, evaluate
+from train import train_one_epoch, evaluate, benchmark_memory
 from test import test_one_epoch
 import torch.nn as nn
 
@@ -194,6 +194,17 @@ def main(args):
                 nprocs=4,
             )
         return
+
+    benchmark_memory(
+        model,
+        criterion,
+        data_loader_val,
+        device,
+        logger,
+        args,
+        0,
+        nprocs=utils.get_world_size(),
+    )
 
     print("Start training")
     start_time = time.time()
