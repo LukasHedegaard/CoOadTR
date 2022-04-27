@@ -15,7 +15,7 @@ do
                 for SEED in 1 2 3 4 5
                 do
                 
-                    echo python main.py \
+                    python main.py \
                         --feature $DATASET \
                         --dim_feature $DIM_FEATURE \
                         --num_layers $LAYERS \
