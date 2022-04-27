@@ -2,7 +2,7 @@
 
 mkdir -p runs
 
-for DATASET in "anet" "kin"
+for DATASET in "anet" #"kin"
 do
     DIM_FEATURE=$([ "$DATASET" = "anet" ] && echo "3072" || echo "4096")
 
