@@ -137,23 +137,20 @@ class TRNTHUMOSDataLayer(data.Dataset):
             else:
                 if osp.exists(
                     osp.join(
-                        self.pickle_root,
-                        "thumos_all_feature_{}_tsn_v2.pickle".format(self.subnet),
+                        self.pickle_root, "thumos_anet_{}.pickle".format(self.subnet)
                     )
                 ):
                     self.feature_All = pickle.load(
                         open(
                             osp.join(
                                 self.pickle_root,
-                                "thumos_all_feature_{}_tsn_v2.pickle".format(
-                                    self.subnet
-                                ),
+                                "thumos_anet_{}.pickle".format(self.subnet),
                             ),
                             "rb",
                         )
                     )
                     print(
-                        "load thumos_all_feature_{}_tsn_v2.pickle !".format(self.subnet)
+                        "load thumos_anet_{}.pickle !".format(self.subnet)
                     )
                 else:
                     self.feature_All = {}
