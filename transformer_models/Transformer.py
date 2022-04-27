@@ -1,3 +1,4 @@
+import torch
 from torch import nn
 from .Attention import SelfAttention
 
@@ -56,6 +57,7 @@ class TransformerModel(nn.Module):
         mlp_dim,
         dropout_rate=0.1,
         attn_dropout_rate=0.1,
+        cls_token_layer_idx=0,
     ):
         super().__init__()
         layers = []
@@ -75,9 +77,17 @@ class TransformerModel(nn.Module):
                 ]
             )
         self.net = nn.Sequential(*layers)
+        self.cls_token_layer_idx = cls_token_layer_idx
+        if cls_token_layer_idx > -1 and cls_token_layer_idx <= len(self.net):
+            self.cls_token = nn.Parameter(torch.zeros(1, 1, dim))
 
     def forward(self, x):
-        return self.net(x)
+        for i, layer in enumerate(self.net):
+            if i == self.cls_token_layer_idx:
+                cls_tokens = self.cls_token.expand(x.shape[0], -1, -1)
+                x = torch.cat((x, cls_tokens), dim=1)
+            x = layer(x)
+        return x
 
 
 def _register_ptflops():

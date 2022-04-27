@@ -152,5 +152,11 @@ def get_args_parser():
         default="tcp://127.0.0.1:12342",
         help="url used to set up distributed training",
     )
+    parser.add_argument(
+        "--cls_token_layer_idx",
+        default=-1,
+        type=int,
+        help="Layer index before which to add class token.",
+    )
     # 'env://'
     return parser

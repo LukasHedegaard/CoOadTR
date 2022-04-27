@@ -72,6 +72,7 @@ def main(args):
         attn_dropout_rate=args.attn_dropout_rate,
         num_channels=args.dim_feature,
         positional_encoding_type=args.positional_encoding_type,
+        cls_token_layer_idx=args.cls_token_layer_idx,
     )
 
     # Compute FLOPs

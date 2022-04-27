@@ -32,6 +32,7 @@ class VisionTransformer_v3(nn.Module):
         with_camera=True,
         with_motion=True,
         num_channels=3072,
+        cls_token_layer_idx=-1,
     ):
         super(VisionTransformer_v3, self).__init__()
 
@@ -50,9 +51,9 @@ class VisionTransformer_v3(nn.Module):
 
         # self.num_patches = int((img_dim // patch_dim) ** 2)
         self.num_patches = int(img_dim // patch_dim)
-        self.seq_length = self.num_patches + 1
+        self.seq_length = self.num_patches
         self.flatten_dim = patch_dim * patch_dim * num_channels
-        self.cls_token = nn.Parameter(torch.zeros(1, 1, embedding_dim))
+        # self.cls_token = nn.Parameter(torch.zeros(1, 1, embedding_dim))
 
         self.linear_encoding = nn.Linear(self.flatten_dim, embedding_dim)
         if positional_encoding_type == "learned":
@@ -74,6 +75,7 @@ class VisionTransformer_v3(nn.Module):
             hidden_dim,
             self.dropout_rate,
             self.attn_dropout_rate,
+            cls_token_layer_idx=cls_token_layer_idx,
         )
         self.pre_head_ln = nn.LayerNorm(embedding_dim)
 
@@ -112,7 +114,7 @@ class VisionTransformer_v3(nn.Module):
         else:
             self.conv_x = None
 
-        self.to_cls_token = nn.Identity()
+        # self.to_cls_token = nn.Identity()
 
         # Decoder
         # factor = 1  # 5
@@ -172,9 +174,9 @@ class VisionTransformer_v3(nn.Module):
             x = sequence_input_flow
 
         x = self.linear_encoding(x)
-        cls_tokens = self.cls_token.expand(x.shape[0], -1, -1)
+        # cls_tokens = self.cls_token.expand(x.shape[0], -1, -1)
         # x = torch.cat((cls_tokens, x), dim=1)
-        x = torch.cat((x, cls_tokens), dim=1)
+        # x = torch.cat((x, cls_tokens), dim=1)
         x = self.position_encoding(x)
         x = self.pe_dropout(x)  # not delete
 
