@@ -89,6 +89,26 @@ def main(args):
         print(f"Model FLOPs: {flops}")
         print(f"Model params: {params}")
 
+        # Check max mem
+        with torch.no_grad():
+            model.clean_state()
+            model.to(device)
+            t = torch.randn(1, args.dim_feature, device=device)
+            for _ in range(args.enc_layers):
+                model.forward_step(t)
+
+            torch.cuda.reset_peak_memory_stats(device=device)
+            pre_mem = torch.cuda.memory_allocated(device=device)
+
+            model.forward_step(t)
+
+            print(torch.cuda.memory_summary(device=device, abbreviated=True))
+
+            post_mem = torch.cuda.memory_allocated(device=device)
+            max_mem = torch.cuda.max_memory_allocated(device=device)
+
+            print("Memory state pre, max, post inference:", pre_mem, max_mem, post_mem)
+
     except Exception as e:
         print(e)
         ...
