@@ -68,158 +68,16 @@ class TRNTHUMOSDataLayer(data.Dataset):
                             dec_target,
                         ]
                     )
-        if "V3" in self.feature_pretrain:
-            if osp.exists(
+        self.feature_All = pickle.load(
+            open(
                 osp.join(
                     self.pickle_root,
-                    "thumos_all_feature_{}_V3.pickle".format(self.subnet),
-                )
-            ):
-                self.feature_All = pickle.load(
-                    open(
-                        osp.join(
-                            self.pickle_root,
-                            "thumos_all_feature_{}_V3.pickle".format(self.subnet),
-                        ),
-                        "rb",
-                    )
-                )
-                print("load thumos_all_feature_{}_V3.pickle !".format(self.subnet))
-            else:
-                self.feature_All = {}
-                for session in self.sessions:
-                    self.feature_All[session] = {}
-                    self.feature_All[session]["rgb"] = np.load(
-                        osp.join(
-                            self.data_root, self.feature_pretrain, session + "_rgb.npy"
-                        )
-                    )
-                    self.feature_All[session]["flow"] = np.load(
-                        osp.join(
-                            self.data_root, self.feature_pretrain, session + "_flow.npy"
-                        )
-                    )
-                with open(
-                    osp.join(
-                        self.pickle_root,
-                        "thumos_all_feature_{}_V3.pickle".format(self.subnet),
-                    ),
-                    "wb",
-                ) as f:
-                    pickle.dump(self.feature_All, f)
-                print("dump thumos_all_feature_{}_V3.pickle !".format(self.subnet))
-        elif "Anet2016_feature_v2" in self.feature_pretrain:
-            if self.resize:
-                if osp.exists(
-                    osp.join(
-                        self.pickle_root,
-                        "thumos_all_feature_{}_tsn_v2_resize.pickle".format(
-                            self.subnet
-                        ),
-                    )
-                ):
-                    self.feature_All = pickle.load(
-                        open(
-                            osp.join(
-                                self.pickle_root,
-                                "thumos_all_feature_{}_tsn_v2_resize.pickle".format(
-                                    self.subnet
-                                ),
-                            ),
-                            "rb",
-                        )
-                    )
-                    print(
-                        "load thumos_all_feature_{}_tsn_v2_resize.pickle !".format(
-                            self.subnet
-                        )
-                    )
-            else:
-                if osp.exists(
-                    osp.join(
-                        self.pickle_root, "thumos_anet_{}.pickle".format(self.subnet)
-                    )
-                ):
-                    self.feature_All = pickle.load(
-                        open(
-                            osp.join(
-                                self.pickle_root,
-                                "thumos_anet_{}.pickle".format(self.subnet),
-                            ),
-                            "rb",
-                        )
-                    )
-                    print(
-                        "load thumos_anet_{}.pickle !".format(self.subnet)
-                    )
-                else:
-                    self.feature_All = {}
-                    for session in self.sessions:
-                        self.feature_All[session] = {}
-                        self.feature_All[session]["rgb"] = np.load(
-                            osp.join(
-                                self.data_root,
-                                self.feature_pretrain,
-                                session + "_rgb.npy",
-                            )
-                        )
-                        self.feature_All[session]["flow"] = np.load(
-                            osp.join(
-                                self.data_root,
-                                self.feature_pretrain,
-                                session + "_flow.npy",
-                            )
-                        )
-                    with open(
-                        osp.join(
-                            self.pickle_root,
-                            "thumos_all_feature_{}_tsn_v2.pickle".format(self.subnet),
-                        ),
-                        "wb",
-                    ) as f:
-                        pickle.dump(self.feature_All, f)
-                    print(
-                        "dump thumos_all_feature_{}_tsn_v2.pickle !".format(self.subnet)
-                    )
-        else:
-            if osp.exists(
-                osp.join(
-                    self.pickle_root, "thumos_all_feature_{}.pickle".format(self.subnet)
-                )
-            ):
-                self.feature_All = pickle.load(
-                    open(
-                        osp.join(
-                            self.pickle_root,
-                            "thumos_all_feature_{}.pickle".format(self.subnet),
-                        ),
-                        "rb",
-                    )
-                )
-                print("load thumos_all_feature_{}.pickle !".format(self.subnet))
-            else:
-                self.feature_All = {}
-                for session in self.sessions:
-                    self.feature_All[session] = {}
-                    self.feature_All[session]["rgb"] = np.load(
-                        osp.join(
-                            self.data_root, self.feature_pretrain, session + "_rgb.npy"
-                        )
-                    )
-                    self.feature_All[session]["flow"] = np.load(
-                        osp.join(
-                            self.data_root, self.feature_pretrain, session + "_flow.npy"
-                        )
-                    )
-                with open(
-                    osp.join(
-                        self.pickle_root,
-                        "thumos_all_feature_{}.pickle".format(self.subnet),
-                    ),
-                    "wb",
-                ) as f:
-                    pickle.dump(self.feature_All, f)
-                print("dump thumos_all_feature_{}.pickle !".format(self.subnet))
+                    "thumos_{}_{}.pickle".format(self.feature_pretrain, self.subnet),
+                ),
+                "rb",
+            )
+        )
+        print("load thumos_{}_{}.pickle !".format(self.feature_pretrain, self.subnet))
 
     def get_dec_target(self, target_vector):
         target_matrix = np.zeros(
