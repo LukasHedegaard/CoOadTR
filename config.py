@@ -156,7 +156,7 @@ def get_args_parser():
         "--cls_token_layer_idx",
         default=-1,
         type=int,
-        help="Layer index before which to add class token.",
+        help="Layer index before which to add class token. NB: Layers go SDA -> FF -> SDA -> FF ...",
     )
     # 'env://'
     return parser
