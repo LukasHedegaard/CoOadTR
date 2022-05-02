@@ -1,0 +1,396 @@
+Failed to add flops_counter_hook: module 'ptflops.flops_counter' has no attribute 'MODULES_MAPPING'
+Not using distributed mode
+lr:0.0001
+batch_size:128
+weight_decay:0.0001
+epochs:5
+resize_feature:False
+lr_drop:1
+clip_max_norm:1.0
+dataparallel:False
+removelog:False
+version:v3
+query_num:8
+decoder_layers:5
+decoder_embedding_dim:1024
+decoder_embedding_dim_out:1024
+decoder_attn_dropout_rate:0.1
+decoder_num_heads:4
+classification_pred_loss_coef:0.5
+enc_layers:64
+lr_backbone:0.0001
+feature:tvseries_kin_features.pickle
+dim_feature:4096
+patch_dim:1
+embedding_dim:1024
+num_heads:8
+num_layers:3
+attn_dropout_rate:0.1
+positional_encoding_type:learned
+hidden_dim:1024
+dropout_rate:0.1
+numclass:31
+classification_x_loss_coef:0.3
+classification_h_loss_coef:1
+similar_loss_coef:0.1
+margin:1.0
+dataset:tvseries
+dataset_file:data/data_info_new.json
+frozen_weights:None
+thumos_data_path:/home/dancer/mycode/Temporal.Online.Detection/Online.TRN.Pytorch/preprocess/
+thumos_anno_path:data/thumos_{}_anno.pickle
+remove_difficult:False
+device:cuda
+output_dir:models
+seed:3
+resume:
+start_epoch:1
+eval:False
+num_workers:8
+world_size:1
+dist_url:tcp://127.0.0.1:12342
+train_session_set:['24_ep1', '24_ep2', '24_ep3', 'Breaking_Bad_ep1', 'Breaking_Bad_ep2', 'How_I_Met_Your_Mother_ep1', 'How_I_Met_Your_Mother_ep2', 'How_I_Met_Your_Mother_ep3', 'How_I_Met_Your_Mother_ep4', 'How_I_Met_Your_Mother_ep5', 'How_I_Met_Your_Mother_ep6', 'Mad_Men_ep1', 'Mad_Men_ep2', 'Modern_Family_ep1', 'Modern_Family_ep2', 'Modern_Family_ep3', 'Modern_Family_ep4', 'Modern_Family_ep6', 'Sons_of_Anarchy_ep1', 'Sons_of_Anarchy_ep2']
+test_session_set:['24_ep4', 'Breaking_Bad_ep3', 'Mad_Men_ep3', 'How_I_Met_Your_Mother_ep7', 'How_I_Met_Your_Mother_ep8', 'Modern_Family_ep5', 'Sons_of_Anarchy_ep3']
+class_index:['background', 'Pick something up', 'Point', 'Drink', 'Stand up', 'Run', 'Sit down', 'Read', 'Smoke', 'Drive car', 'Open door', 'Give something', 'Use computer', 'Write', 'Go down stairway', 'Close door', 'Throw something', 'Go up stairway', 'Get in/out of car', 'Hang up phone', 'Eat', 'Answer phone', 'Dress up', 'Clap', 'Undress', 'Kiss', 'Fall/trip', 'Wave', 'Pour', 'Punch', 'Fire weapon']
+distributed:False
+position encoding : learned
+position decoding : learned
+mat1 and mat2 shapes cannot be multiplied (64x4095 and 4096x1024)
+data/tvseries_kin_features.pickle
+Loaded tvseries_kin_features.pickle
+data/tvseries_kin_features.pickle
+Loaded tvseries_kin_features.pickle
+Start training
+Epoch: [1]  [   0/1510]  eta: 1:39:52  lr: 0.000100  loss: 3.1641 (3.1641)  labels_encoder: 2.8865 (2.8865)  labels_decoder: 0.2776 (0.2776)  labels_encoder_unscaled: 2.8865 (2.8865)  labels_decoder_unscaled: 0.5551 (0.5551)  time: 3.9686  data: 3.3151  max mem: 2594
+Epoch: [1]  [  50/1510]  eta: 0:06:22  lr: 0.000100  loss: 1.4052 (1.5896)  labels_encoder: 1.1314 (1.3145)  labels_decoder: 0.2747 (0.2752)  labels_encoder_unscaled: 1.1314 (1.3145)  labels_decoder_unscaled: 0.5493 (0.5504)  time: 0.1923  data: 0.0003  max mem: 3463
+Epoch: [1]  [ 100/1510]  eta: 0:05:13  lr: 0.000100  loss: 1.2198 (1.4106)  labels_encoder: 0.9481 (1.1362)  labels_decoder: 0.2727 (0.2744)  labels_encoder_unscaled: 0.9481 (1.1362)  labels_decoder_unscaled: 0.5454 (0.5489)  time: 0.1872  data: 0.0003  max mem: 3463
+Epoch: [1]  [ 150/1510]  eta: 0:04:45  lr: 0.000100  loss: 1.1793 (1.3416)  labels_encoder: 0.9081 (1.0673)  labels_decoder: 0.2737 (0.2743)  labels_encoder_unscaled: 0.9081 (1.0673)  labels_decoder_unscaled: 0.5474 (0.5485)  time: 0.1828  data: 0.0008  max mem: 3463
+Epoch: [1]  [ 200/1510]  eta: 0:04:24  lr: 0.000100  loss: 1.1711 (1.2967)  labels_encoder: 0.8932 (1.0226)  labels_decoder: 0.2720 (0.2741)  labels_encoder_unscaled: 0.8932 (1.0226)  labels_decoder_unscaled: 0.5440 (0.5482)  time: 0.1724  data: 0.0002  max mem: 3463
+Epoch: [1]  [ 250/1510]  eta: 0:04:07  lr: 0.000100  loss: 1.1167 (1.2686)  labels_encoder: 0.8444 (0.9946)  labels_decoder: 0.2724 (0.2740)  labels_encoder_unscaled: 0.8444 (0.9946)  labels_decoder_unscaled: 0.5447 (0.5480)  time: 0.1798  data: 0.0002  max mem: 3463
+Epoch: [1]  [ 300/1510]  eta: 0:03:46  lr: 0.000100  loss: 1.0448 (1.2423)  labels_encoder: 0.7754 (0.9685)  labels_decoder: 0.2726 (0.2738)  labels_encoder_unscaled: 0.7754 (0.9685)  labels_decoder_unscaled: 0.5451 (0.5476)  time: 0.1424  data: 0.0002  max mem: 3463
+Epoch: [1]  [ 350/1510]  eta: 0:03:29  lr: 0.000100  loss: 1.1190 (1.2237)  labels_encoder: 0.8459 (0.9499)  labels_decoder: 0.2725 (0.2737)  labels_encoder_unscaled: 0.8459 (0.9499)  labels_decoder_unscaled: 0.5450 (0.5474)  time: 0.1451  data: 0.0003  max mem: 3463
+Epoch: [1]  [ 400/1510]  eta: 0:03:15  lr: 0.000100  loss: 1.0018 (1.2053)  labels_encoder: 0.7293 (0.9317)  labels_decoder: 0.2715 (0.2736)  labels_encoder_unscaled: 0.7293 (0.9317)  labels_decoder_unscaled: 0.5429 (0.5472)  time: 0.1416  data: 0.0003  max mem: 3463
+Epoch: [1]  [ 450/1510]  eta: 0:03:02  lr: 0.000100  loss: 1.0834 (1.1913)  labels_encoder: 0.8113 (0.9178)  labels_decoder: 0.2725 (0.2735)  labels_encoder_unscaled: 0.8113 (0.9178)  labels_decoder_unscaled: 0.5450 (0.5471)  time: 0.1420  data: 0.0002  max mem: 3463
+Epoch: [1]  [ 500/1510]  eta: 0:02:51  lr: 0.000100  loss: 1.0795 (1.1808)  labels_encoder: 0.8064 (0.9074)  labels_decoder: 0.2724 (0.2735)  labels_encoder_unscaled: 0.8064 (0.9074)  labels_decoder_unscaled: 0.5449 (0.5469)  time: 0.1433  data: 0.0003  max mem: 3463
+Epoch: [1]  [ 550/1510]  eta: 0:02:40  lr: 0.000100  loss: 1.0393 (1.1683)  labels_encoder: 0.7649 (0.8949)  labels_decoder: 0.2723 (0.2734)  labels_encoder_unscaled: 0.7649 (0.8949)  labels_decoder_unscaled: 0.5446 (0.5468)  time: 0.1427  data: 0.0003  max mem: 3463
+Epoch: [1]  [ 600/1510]  eta: 0:02:30  lr: 0.000100  loss: 0.9486 (1.1579)  labels_encoder: 0.6768 (0.8846)  labels_decoder: 0.2713 (0.2733)  labels_encoder_unscaled: 0.6768 (0.8846)  labels_decoder_unscaled: 0.5427 (0.5466)  time: 0.1447  data: 0.0003  max mem: 3463
+Epoch: [1]  [ 650/1510]  eta: 0:02:20  lr: 0.000100  loss: 1.0855 (1.1508)  labels_encoder: 0.8099 (0.8775)  labels_decoder: 0.2742 (0.2733)  labels_encoder_unscaled: 0.8099 (0.8775)  labels_decoder_unscaled: 0.5483 (0.5466)  time: 0.1399  data: 0.0003  max mem: 3463
+Epoch: [1]  [ 700/1510]  eta: 0:02:10  lr: 0.000100  loss: 1.0202 (1.1439)  labels_encoder: 0.7446 (0.8706)  labels_decoder: 0.2725 (0.2732)  labels_encoder_unscaled: 0.7446 (0.8706)  labels_decoder_unscaled: 0.5449 (0.5465)  time: 0.1375  data: 0.0002  max mem: 3463
+Epoch: [1]  [ 750/1510]  eta: 0:02:01  lr: 0.000100  loss: 1.0194 (1.1364)  labels_encoder: 0.7480 (0.8632)  labels_decoder: 0.2719 (0.2732)  labels_encoder_unscaled: 0.7480 (0.8632)  labels_decoder_unscaled: 0.5438 (0.5465)  time: 0.1425  data: 0.0003  max mem: 3463
+Epoch: [1]  [ 800/1510]  eta: 0:01:53  lr: 0.000100  loss: 1.0390 (1.1282)  labels_encoder: 0.7685 (0.8550)  labels_decoder: 0.2723 (0.2732)  labels_encoder_unscaled: 0.7685 (0.8550)  labels_decoder_unscaled: 0.5445 (0.5464)  time: 0.1482  data: 0.0003  max mem: 3463
+Epoch: [1]  [ 850/1510]  eta: 0:01:44  lr: 0.000100  loss: 1.0163 (1.1215)  labels_encoder: 0.7450 (0.8483)  labels_decoder: 0.2715 (0.2732)  labels_encoder_unscaled: 0.7450 (0.8483)  labels_decoder_unscaled: 0.5430 (0.5464)  time: 0.1390  data: 0.0002  max mem: 3463
+Epoch: [1]  [ 900/1510]  eta: 0:01:35  lr: 0.000100  loss: 1.0029 (1.1159)  labels_encoder: 0.7293 (0.8428)  labels_decoder: 0.2719 (0.2731)  labels_encoder_unscaled: 0.7293 (0.8428)  labels_decoder_unscaled: 0.5438 (0.5462)  time: 0.1394  data: 0.0003  max mem: 3463
+Epoch: [1]  [ 950/1510]  eta: 0:01:27  lr: 0.000100  loss: 0.9592 (1.1099)  labels_encoder: 0.6877 (0.8368)  labels_decoder: 0.2720 (0.2731)  labels_encoder_unscaled: 0.6877 (0.8368)  labels_decoder_unscaled: 0.5440 (0.5462)  time: 0.1467  data: 0.0003  max mem: 3463
+Epoch: [1]  [1000/1510]  eta: 0:01:19  lr: 0.000100  loss: 0.9939 (1.1039)  labels_encoder: 0.7244 (0.8308)  labels_decoder: 0.2704 (0.2731)  labels_encoder_unscaled: 0.7244 (0.8308)  labels_decoder_unscaled: 0.5408 (0.5461)  time: 0.1483  data: 0.0003  max mem: 3463
+Epoch: [1]  [1050/1510]  eta: 0:01:11  lr: 0.000100  loss: 0.9766 (1.0991)  labels_encoder: 0.7015 (0.8260)  labels_decoder: 0.2729 (0.2731)  labels_encoder_unscaled: 0.7015 (0.8260)  labels_decoder_unscaled: 0.5457 (0.5461)  time: 0.1466  data: 0.0002  max mem: 3463
+Epoch: [1]  [1100/1510]  eta: 0:01:03  lr: 0.000100  loss: 0.9319 (1.0929)  labels_encoder: 0.6600 (0.8199)  labels_decoder: 0.2716 (0.2730)  labels_encoder_unscaled: 0.6600 (0.8199)  labels_decoder_unscaled: 0.5432 (0.5461)  time: 0.1447  data: 0.0003  max mem: 3463
+Epoch: [1]  [1150/1510]  eta: 0:00:55  lr: 0.000100  loss: 0.9846 (1.0884)  labels_encoder: 0.7147 (0.8154)  labels_decoder: 0.2727 (0.2730)  labels_encoder_unscaled: 0.7147 (0.8154)  labels_decoder_unscaled: 0.5454 (0.5461)  time: 0.1590  data: 0.0003  max mem: 3463
+Epoch: [1]  [1200/1510]  eta: 0:00:48  lr: 0.000100  loss: 0.9206 (1.0829)  labels_encoder: 0.6484 (0.8099)  labels_decoder: 0.2713 (0.2730)  labels_encoder_unscaled: 0.6484 (0.8099)  labels_decoder_unscaled: 0.5426 (0.5460)  time: 0.1655  data: 0.0003  max mem: 3463
+Epoch: [1]  [1250/1510]  eta: 0:00:40  lr: 0.000100  loss: 0.9102 (1.0784)  labels_encoder: 0.6389 (0.8054)  labels_decoder: 0.2720 (0.2730)  labels_encoder_unscaled: 0.6389 (0.8054)  labels_decoder_unscaled: 0.5439 (0.5460)  time: 0.1640  data: 0.0003  max mem: 3463
+Epoch: [1]  [1300/1510]  eta: 0:00:32  lr: 0.000100  loss: 0.9247 (1.0737)  labels_encoder: 0.6500 (0.8007)  labels_decoder: 0.2718 (0.2730)  labels_encoder_unscaled: 0.6500 (0.8007)  labels_decoder_unscaled: 0.5437 (0.5459)  time: 0.1725  data: 0.0002  max mem: 3463
+Epoch: [1]  [1350/1510]  eta: 0:00:25  lr: 0.000100  loss: 0.8668 (1.0686)  labels_encoder: 0.5951 (0.7957)  labels_decoder: 0.2717 (0.2729)  labels_encoder_unscaled: 0.5951 (0.7957)  labels_decoder_unscaled: 0.5435 (0.5459)  time: 0.1641  data: 0.0003  max mem: 3463
+Epoch: [1]  [1400/1510]  eta: 0:00:17  lr: 0.000100  loss: 0.9982 (1.0652)  labels_encoder: 0.7258 (0.7923)  labels_decoder: 0.2724 (0.2729)  labels_encoder_unscaled: 0.7258 (0.7923)  labels_decoder_unscaled: 0.5448 (0.5459)  time: 0.1613  data: 0.0002  max mem: 3463
+Epoch: [1]  [1450/1510]  eta: 0:00:09  lr: 0.000100  loss: 0.9790 (1.0621)  labels_encoder: 0.7087 (0.7892)  labels_decoder: 0.2718 (0.2729)  labels_encoder_unscaled: 0.7087 (0.7892)  labels_decoder_unscaled: 0.5435 (0.5459)  time: 0.1671  data: 0.0003  max mem: 3463
+Epoch: [1]  [1500/1510]  eta: 0:00:01  lr: 0.000100  loss: 1.0155 (1.0593)  labels_encoder: 0.7420 (0.7864)  labels_decoder: 0.2734 (0.2729)  labels_encoder_unscaled: 0.7420 (0.7864)  labels_decoder_unscaled: 0.5469 (0.5458)  time: 0.1691  data: 0.0004  max mem: 3463
+Epoch: [1]  [1509/1510]  eta: 0:00:00  lr: 0.000100  loss: 0.9414 (1.0587)  labels_encoder: 0.6725 (0.7857)  labels_decoder: 0.2725 (0.2729)  labels_encoder_unscaled: 0.6725 (0.7857)  labels_decoder_unscaled: 0.5450 (0.5458)  time: 0.1586  data: 0.0004  max mem: 3463
+Epoch: [1] Total time: 0:03:59 (0.1584 s / it)
+Averaged stats: lr: 0.000100  loss: 0.9414 (1.0587)  labels_encoder: 0.6725 (0.7857)  labels_decoder: 0.2725 (0.2729)  labels_encoder_unscaled: 0.6725 (0.7857)  labels_decoder_unscaled: 0.5450 (0.5458)
+Test:  [  0/559]  eta: 0:20:19  loss: 2.4966 (2.4966)  labels_encoder: 0.7775 (0.7775)  labels_decoder: 1.7191 (1.7191)  labels_encoder_unscaled: 0.7775 (0.7775)  labels_decoder_unscaled: 3.4382 (3.4382)  time: 2.1813  data: 2.1069  max mem: 3463
+Test:  [ 50/559]  eta: 0:01:14  loss: 2.4145 (2.6039)  labels_encoder: 0.6994 (0.8626)  labels_decoder: 1.7247 (1.7413)  labels_encoder_unscaled: 0.6994 (0.8626)  labels_decoder_unscaled: 3.4494 (3.4825)  time: 0.1021  data: 0.0005  max mem: 3463
+Test:  [100/559]  eta: 0:00:55  loss: 2.4289 (2.5905)  labels_encoder: 0.7226 (0.8515)  labels_decoder: 1.7342 (1.7390)  labels_encoder_unscaled: 0.7226 (0.8515)  labels_decoder_unscaled: 3.4684 (3.4780)  time: 0.0944  data: 0.0011  max mem: 3463
+Test:  [150/559]  eta: 0:00:46  loss: 2.4554 (2.6395)  labels_encoder: 0.7275 (0.8972)  labels_decoder: 1.7300 (1.7423)  labels_encoder_unscaled: 0.7275 (0.8972)  labels_decoder_unscaled: 3.4600 (3.4846)  time: 0.0932  data: 0.0009  max mem: 3463
+Test:  [200/559]  eta: 0:00:39  loss: 2.2997 (2.5944)  labels_encoder: 0.5896 (0.8521)  labels_decoder: 1.7337 (1.7424)  labels_encoder_unscaled: 0.5896 (0.8521)  labels_decoder_unscaled: 3.4674 (3.4847)  time: 0.0970  data: 0.0009  max mem: 3463
+Test:  [250/559]  eta: 0:00:33  loss: 2.3997 (2.7325)  labels_encoder: 0.6680 (0.9775)  labels_decoder: 1.7394 (1.7550)  labels_encoder_unscaled: 0.6680 (0.9775)  labels_decoder_unscaled: 3.4788 (3.5099)  time: 0.0967  data: 0.0002  max mem: 3463
+Test:  [300/559]  eta: 0:00:27  loss: 2.7626 (2.7788)  labels_encoder: 1.0107 (1.0179)  labels_decoder: 1.7441 (1.7609)  labels_encoder_unscaled: 1.0107 (1.0179)  labels_decoder_unscaled: 3.4881 (3.5218)  time: 0.0979  data: 0.0016  max mem: 3463
+Test:  [350/559]  eta: 0:00:21  loss: 2.4508 (2.7932)  labels_encoder: 0.6745 (1.0290)  labels_decoder: 1.7377 (1.7641)  labels_encoder_unscaled: 0.6745 (1.0290)  labels_decoder_unscaled: 3.4754 (3.5282)  time: 0.1025  data: 0.0004  max mem: 3463
+Test:  [400/559]  eta: 0:00:16  loss: 2.2004 (2.7699)  labels_encoder: 0.4355 (1.0073)  labels_decoder: 1.7407 (1.7626)  labels_encoder_unscaled: 0.4355 (1.0073)  labels_decoder_unscaled: 3.4814 (3.5253)  time: 0.0987  data: 0.0002  max mem: 3463
+Test:  [450/559]  eta: 0:00:11  loss: 2.1754 (2.7416)  labels_encoder: 0.4300 (0.9804)  labels_decoder: 1.7355 (1.7612)  labels_encoder_unscaled: 0.4300 (0.9804)  labels_decoder_unscaled: 3.4711 (3.5225)  time: 0.1011  data: 0.0002  max mem: 3463
+Test:  [500/559]  eta: 0:00:06  loss: 2.3021 (2.7244)  labels_encoder: 0.5812 (0.9651)  labels_decoder: 1.7336 (1.7593)  labels_encoder_unscaled: 0.5812 (0.9651)  labels_decoder_unscaled: 3.4671 (3.5186)  time: 0.0923  data: 0.0014  max mem: 3463
+Test:  [550/559]  eta: 0:00:00  loss: 2.4664 (2.6929)  labels_encoder: 0.7192 (0.9341)  labels_decoder: 1.7423 (1.7587)  labels_encoder_unscaled: 0.7192 (0.9341)  labels_decoder_unscaled: 3.4846 (3.5175)  time: 0.0935  data: 0.0001  max mem: 3463
+Test:  [558/559]  eta: 0:00:00  loss: 2.1164 (2.6862)  labels_encoder: 0.3824 (0.9278)  labels_decoder: 1.7381 (1.7584)  labels_encoder_unscaled: 0.3824 (0.9278)  labels_decoder_unscaled: 3.4762 (3.5168)  time: 0.0852  data: 0.0001  max mem: 3463
+Test: Total time: 0:00:57 (0.1021 s / it)
+Averaged stats: loss: 2.1164 (2.6862)  labels_encoder: 0.3824 (0.9278)  labels_decoder: 1.7381 (1.7584)  labels_encoder_unscaled: 0.3824 (0.9278)  labels_decoder_unscaled: 3.4762 (3.5168)
+(21, 71496)
+(21, 71496)
+[Epoch-1] [IDU-tvseries_kin_features.pickle] mAP: 0.1374, mcAP: 0.8843
+
+dec_mAP all together: | 0.006323002588070783 |.
+dec_mAP_pred | 0 : 0.006265149575383872 |.
+dec_mAP_pred | 1 : 0.006305469717384565 |.
+dec_mAP_pred | 2 : 0.0063589865816383335 |.
+dec_mAP_pred | 3 : 0.006381099248975489 |.
+dec_mAP_pred | 4 : 0.006400386463530283 |.
+dec_mAP_pred | 5 : 0.006416842265491207 |.
+dec_mAP_pred | 6 : 0.006457770703757229 |.
+dec_mAP_pred | 7 : 0.006425020272431398 |.
+all decoder map: | 0.0064 |.
+BaseballPitch: 0.0384
+BasketballDunk: 0.0731
+Billiards: 0.0057
+CleanAndJerk: 0.3685
+CliffDiving: 0.4965
+CricketBowling: 0.0592
+CricketShot: 0.0971
+Diving: 0.0278
+FrisbeeCatch: 0.1386
+GolfSwing: 0.0419
+HammerThrow: 0.0725
+HighJump: 0.0670
+JavelinThrow: 0.1320
+LongJump: 0.4629
+PoleVault: 0.1065
+Shotput: 0.1477
+SoccerPenalty: 0.0545
+TennisSwing: 0.1831
+ThrowDiscus: 0.0429
+VolleyballSpiking: 0.1317
+Epoch: [2]  [   0/1510]  eta: 1:01:24  lr: 0.000010  loss: 0.9462 (0.9462)  labels_encoder: 0.6740 (0.6740)  labels_decoder: 0.2723 (0.2723)  labels_encoder_unscaled: 0.6740 (0.6740)  labels_decoder_unscaled: 0.5445 (0.5445)  time: 2.4402  data: 2.2352  max mem: 3463
+Epoch: [2]  [  50/1510]  eta: 0:04:39  lr: 0.000010  loss: 0.8665 (0.8901)  labels_encoder: 0.5955 (0.6172)  labels_decoder: 0.2718 (0.2729)  labels_encoder_unscaled: 0.5955 (0.6172)  labels_decoder_unscaled: 0.5435 (0.5459)  time: 0.1526  data: 0.0003  max mem: 3463
+Epoch: [2]  [ 100/1510]  eta: 0:03:59  lr: 0.000010  loss: 0.8500 (0.8806)  labels_encoder: 0.5756 (0.6081)  labels_decoder: 0.2707 (0.2725)  labels_encoder_unscaled: 0.5756 (0.6081)  labels_decoder_unscaled: 0.5415 (0.5451)  time: 0.1446  data: 0.0003  max mem: 3463
+Epoch: [2]  [ 150/1510]  eta: 0:03:40  lr: 0.000010  loss: 0.8839 (0.8747)  labels_encoder: 0.6145 (0.6022)  labels_decoder: 0.2714 (0.2725)  labels_encoder_unscaled: 0.6145 (0.6022)  labels_decoder_unscaled: 0.5427 (0.5449)  time: 0.1455  data: 0.0003  max mem: 3463
+Epoch: [2]  [ 200/1510]  eta: 0:03:28  lr: 0.000010  loss: 0.8869 (0.8792)  labels_encoder: 0.6144 (0.6067)  labels_decoder: 0.2718 (0.2725)  labels_encoder_unscaled: 0.6144 (0.6067)  labels_decoder_unscaled: 0.5436 (0.5450)  time: 0.1510  data: 0.0003  max mem: 3463
+Epoch: [2]  [ 250/1510]  eta: 0:03:17  lr: 0.000010  loss: 0.8447 (0.8781)  labels_encoder: 0.5738 (0.6057)  labels_decoder: 0.2710 (0.2724)  labels_encoder_unscaled: 0.5738 (0.6057)  labels_decoder_unscaled: 0.5419 (0.5449)  time: 0.1456  data: 0.0003  max mem: 3463
+Epoch: [2]  [ 300/1510]  eta: 0:03:07  lr: 0.000010  loss: 0.8475 (0.8791)  labels_encoder: 0.5782 (0.6067)  labels_decoder: 0.2710 (0.2724)  labels_encoder_unscaled: 0.5782 (0.6067)  labels_decoder_unscaled: 0.5420 (0.5449)  time: 0.1458  data: 0.0003  max mem: 3463
+Epoch: [2]  [ 350/1510]  eta: 0:02:58  lr: 0.000010  loss: 0.8411 (0.8761)  labels_encoder: 0.5705 (0.6037)  labels_decoder: 0.2726 (0.2724)  labels_encoder_unscaled: 0.5705 (0.6037)  labels_decoder_unscaled: 0.5452 (0.5448)  time: 0.1477  data: 0.0003  max mem: 3463
+Epoch: [2]  [ 400/1510]  eta: 0:02:50  lr: 0.000010  loss: 0.8538 (0.8750)  labels_encoder: 0.5822 (0.6026)  labels_decoder: 0.2716 (0.2724)  labels_encoder_unscaled: 0.5822 (0.6026)  labels_decoder_unscaled: 0.5433 (0.5448)  time: 0.1538  data: 0.0003  max mem: 3463
+Epoch: [2]  [ 450/1510]  eta: 0:02:42  lr: 0.000010  loss: 0.9014 (0.8755)  labels_encoder: 0.6273 (0.6031)  labels_decoder: 0.2726 (0.2724)  labels_encoder_unscaled: 0.6273 (0.6031)  labels_decoder_unscaled: 0.5453 (0.5448)  time: 0.1536  data: 0.0003  max mem: 3463
+Epoch: [2]  [ 500/1510]  eta: 0:02:33  lr: 0.000010  loss: 0.8363 (0.8735)  labels_encoder: 0.5635 (0.6010)  labels_decoder: 0.2707 (0.2724)  labels_encoder_unscaled: 0.5635 (0.6010)  labels_decoder_unscaled: 0.5415 (0.5448)  time: 0.1454  data: 0.0003  max mem: 3463
+Epoch: [2]  [ 550/1510]  eta: 0:02:25  lr: 0.000010  loss: 0.9020 (0.8730)  labels_encoder: 0.6310 (0.6006)  labels_decoder: 0.2715 (0.2724)  labels_encoder_unscaled: 0.6310 (0.6006)  labels_decoder_unscaled: 0.5430 (0.5449)  time: 0.1485  data: 0.0003  max mem: 3463
+Epoch: [2]  [ 600/1510]  eta: 0:02:17  lr: 0.000010  loss: 0.8765 (0.8728)  labels_encoder: 0.6046 (0.6004)  labels_decoder: 0.2720 (0.2724)  labels_encoder_unscaled: 0.6046 (0.6004)  labels_decoder_unscaled: 0.5440 (0.5449)  time: 0.1467  data: 0.0003  max mem: 3463
+Epoch: [2]  [ 650/1510]  eta: 0:02:09  lr: 0.000010  loss: 0.8686 (0.8722)  labels_encoder: 0.5965 (0.5997)  labels_decoder: 0.2726 (0.2724)  labels_encoder_unscaled: 0.5965 (0.5997)  labels_decoder_unscaled: 0.5452 (0.5449)  time: 0.1504  data: 0.0003  max mem: 3463
+Epoch: [2]  [ 700/1510]  eta: 0:02:02  lr: 0.000010  loss: 0.8471 (0.8719)  labels_encoder: 0.5769 (0.5994)  labels_decoder: 0.2718 (0.2725)  labels_encoder_unscaled: 0.5769 (0.5994)  labels_decoder_unscaled: 0.5436 (0.5449)  time: 0.1484  data: 0.0003  max mem: 3463
+Epoch: [2]  [ 750/1510]  eta: 0:01:54  lr: 0.000010  loss: 0.8262 (0.8699)  labels_encoder: 0.5539 (0.5974)  labels_decoder: 0.2729 (0.2725)  labels_encoder_unscaled: 0.5539 (0.5974)  labels_decoder_unscaled: 0.5458 (0.5450)  time: 0.1447  data: 0.0003  max mem: 3463
+Epoch: [2]  [ 800/1510]  eta: 0:01:47  lr: 0.000010  loss: 0.8313 (0.8706)  labels_encoder: 0.5599 (0.5981)  labels_decoder: 0.2714 (0.2725)  labels_encoder_unscaled: 0.5599 (0.5981)  labels_decoder_unscaled: 0.5428 (0.5450)  time: 0.1535  data: 0.0003  max mem: 3463
+Epoch: [2]  [ 850/1510]  eta: 0:01:39  lr: 0.000010  loss: 0.8089 (0.8693)  labels_encoder: 0.5372 (0.5968)  labels_decoder: 0.2717 (0.2725)  labels_encoder_unscaled: 0.5372 (0.5968)  labels_decoder_unscaled: 0.5435 (0.5450)  time: 0.1479  data: 0.0003  max mem: 3463
+Epoch: [2]  [ 900/1510]  eta: 0:01:31  lr: 0.000010  loss: 0.8063 (0.8677)  labels_encoder: 0.5354 (0.5952)  labels_decoder: 0.2723 (0.2725)  labels_encoder_unscaled: 0.5354 (0.5952)  labels_decoder_unscaled: 0.5445 (0.5450)  time: 0.1435  data: 0.0003  max mem: 3463
+Epoch: [2]  [ 950/1510]  eta: 0:01:24  lr: 0.000010  loss: 0.8142 (0.8670)  labels_encoder: 0.5449 (0.5945)  labels_decoder: 0.2716 (0.2725)  labels_encoder_unscaled: 0.5449 (0.5945)  labels_decoder_unscaled: 0.5431 (0.5450)  time: 0.1523  data: 0.0003  max mem: 3463
+Epoch: [2]  [1000/1510]  eta: 0:01:16  lr: 0.000010  loss: 0.8403 (0.8643)  labels_encoder: 0.5671 (0.5918)  labels_decoder: 0.2732 (0.2725)  labels_encoder_unscaled: 0.5671 (0.5918)  labels_decoder_unscaled: 0.5464 (0.5450)  time: 0.1535  data: 0.0004  max mem: 3463
+Epoch: [2]  [1050/1510]  eta: 0:01:09  lr: 0.000010  loss: 0.7931 (0.8625)  labels_encoder: 0.5182 (0.5900)  labels_decoder: 0.2723 (0.2725)  labels_encoder_unscaled: 0.5182 (0.5900)  labels_decoder_unscaled: 0.5446 (0.5450)  time: 0.1598  data: 0.0004  max mem: 3463
+Epoch: [2]  [1100/1510]  eta: 0:01:01  lr: 0.000010  loss: 0.8209 (0.8609)  labels_encoder: 0.5473 (0.5884)  labels_decoder: 0.2723 (0.2725)  labels_encoder_unscaled: 0.5473 (0.5884)  labels_decoder_unscaled: 0.5446 (0.5450)  time: 0.1563  data: 0.0004  max mem: 3463
+Epoch: [2]  [1150/1510]  eta: 0:00:54  lr: 0.000010  loss: 0.8495 (0.8596)  labels_encoder: 0.5755 (0.5871)  labels_decoder: 0.2721 (0.2725)  labels_encoder_unscaled: 0.5755 (0.5871)  labels_decoder_unscaled: 0.5443 (0.5450)  time: 0.1524  data: 0.0004  max mem: 3463
+Epoch: [2]  [1200/1510]  eta: 0:00:46  lr: 0.000010  loss: 0.8559 (0.8590)  labels_encoder: 0.5834 (0.5865)  labels_decoder: 0.2723 (0.2725)  labels_encoder_unscaled: 0.5834 (0.5865)  labels_decoder_unscaled: 0.5447 (0.5450)  time: 0.1415  data: 0.0010  max mem: 3463
+Epoch: [2]  [1250/1510]  eta: 0:00:39  lr: 0.000010  loss: 0.8125 (0.8581)  labels_encoder: 0.5377 (0.5856)  labels_decoder: 0.2718 (0.2725)  labels_encoder_unscaled: 0.5377 (0.5856)  labels_decoder_unscaled: 0.5435 (0.5450)  time: 0.1421  data: 0.0002  max mem: 3463
+Epoch: [2]  [1300/1510]  eta: 0:00:31  lr: 0.000010  loss: 0.8785 (0.8572)  labels_encoder: 0.6067 (0.5846)  labels_decoder: 0.2721 (0.2725)  labels_encoder_unscaled: 0.6067 (0.5846)  labels_decoder_unscaled: 0.5442 (0.5450)  time: 0.1385  data: 0.0002  max mem: 3463
+Epoch: [2]  [1350/1510]  eta: 0:00:23  lr: 0.000010  loss: 0.7878 (0.8564)  labels_encoder: 0.5171 (0.5839)  labels_decoder: 0.2708 (0.2725)  labels_encoder_unscaled: 0.5171 (0.5839)  labels_decoder_unscaled: 0.5415 (0.5450)  time: 0.1406  data: 0.0002  max mem: 3463
+Epoch: [2]  [1400/1510]  eta: 0:00:16  lr: 0.000010  loss: 0.8542 (0.8560)  labels_encoder: 0.5816 (0.5835)  labels_decoder: 0.2729 (0.2725)  labels_encoder_unscaled: 0.5816 (0.5835)  labels_decoder_unscaled: 0.5459 (0.5450)  time: 0.1403  data: 0.0002  max mem: 3463
+Epoch: [2]  [1450/1510]  eta: 0:00:08  lr: 0.000010  loss: 0.8417 (0.8549)  labels_encoder: 0.5705 (0.5824)  labels_decoder: 0.2713 (0.2725)  labels_encoder_unscaled: 0.5705 (0.5824)  labels_decoder_unscaled: 0.5427 (0.5450)  time: 0.1539  data: 0.0003  max mem: 3463
+Epoch: [2]  [1500/1510]  eta: 0:00:01  lr: 0.000010  loss: 0.8038 (0.8539)  labels_encoder: 0.5332 (0.5814)  labels_decoder: 0.2709 (0.2725)  labels_encoder_unscaled: 0.5332 (0.5814)  labels_decoder_unscaled: 0.5419 (0.5450)  time: 0.1537  data: 0.0007  max mem: 3463
+Epoch: [2]  [1509/1510]  eta: 0:00:00  lr: 0.000010  loss: 0.8032 (0.8538)  labels_encoder: 0.5319 (0.5812)  labels_decoder: 0.2708 (0.2725)  labels_encoder_unscaled: 0.5319 (0.5812)  labels_decoder_unscaled: 0.5417 (0.5451)  time: 0.1436  data: 0.0006  max mem: 3463
+Epoch: [2] Total time: 0:03:47 (0.1504 s / it)
+Averaged stats: lr: 0.000010  loss: 0.8032 (0.8538)  labels_encoder: 0.5319 (0.5812)  labels_decoder: 0.2708 (0.2725)  labels_encoder_unscaled: 0.5319 (0.5812)  labels_decoder_unscaled: 0.5417 (0.5451)
+Test:  [  0/559]  eta: 0:23:19  loss: 2.4557 (2.4557)  labels_encoder: 0.7474 (0.7474)  labels_decoder: 1.7082 (1.7082)  labels_encoder_unscaled: 0.7474 (0.7474)  labels_decoder_unscaled: 3.4164 (3.4164)  time: 2.5038  data: 2.3933  max mem: 3463
+Test:  [ 50/559]  eta: 0:01:03  loss: 2.9164 (2.7287)  labels_encoder: 1.2133 (1.0030)  labels_decoder: 1.7128 (1.7257)  labels_encoder_unscaled: 1.2133 (1.0030)  labels_decoder_unscaled: 3.4255 (3.4515)  time: 0.0723  data: 0.0002  max mem: 3463
+Test:  [100/559]  eta: 0:00:45  loss: 2.4864 (2.6892)  labels_encoder: 0.7652 (0.9651)  labels_decoder: 1.7202 (1.7241)  labels_encoder_unscaled: 0.7652 (0.9651)  labels_decoder_unscaled: 3.4405 (3.4481)  time: 0.0783  data: 0.0002  max mem: 3463
+Test:  [150/559]  eta: 0:00:37  loss: 2.3199 (2.6871)  labels_encoder: 0.6076 (0.9602)  labels_decoder: 1.7163 (1.7269)  labels_encoder_unscaled: 0.6076 (0.9602)  labels_decoder_unscaled: 3.4327 (3.4538)  time: 0.0731  data: 0.0003  max mem: 3463
+Test:  [200/559]  eta: 0:00:31  loss: 2.3159 (2.6057)  labels_encoder: 0.6076 (0.8790)  labels_decoder: 1.7157 (1.7267)  labels_encoder_unscaled: 0.6076 (0.8790)  labels_decoder_unscaled: 3.4314 (3.4533)  time: 0.0706  data: 0.0002  max mem: 3463
+Test:  [250/559]  eta: 0:00:26  loss: 2.4735 (2.7149)  labels_encoder: 0.7592 (0.9753)  labels_decoder: 1.7206 (1.7395)  labels_encoder_unscaled: 0.7592 (0.9753)  labels_decoder_unscaled: 3.4412 (3.4791)  time: 0.0924  data: 0.0002  max mem: 3463
+Test:  [300/559]  eta: 0:00:22  loss: 2.7966 (2.7636)  labels_encoder: 1.0526 (1.0179)  labels_decoder: 1.7260 (1.7456)  labels_encoder_unscaled: 1.0526 (1.0179)  labels_decoder_unscaled: 3.4521 (3.4913)  time: 0.0750  data: 0.0002  max mem: 3463
+Test:  [350/559]  eta: 0:00:17  loss: 2.4771 (2.7916)  labels_encoder: 0.7694 (1.0426)  labels_decoder: 1.7202 (1.7490)  labels_encoder_unscaled: 0.7694 (1.0426)  labels_decoder_unscaled: 3.4403 (3.4979)  time: 0.0750  data: 0.0002  max mem: 3463
+Test:  [400/559]  eta: 0:00:13  loss: 2.1070 (2.7633)  labels_encoder: 0.3834 (1.0158)  labels_decoder: 1.7234 (1.7476)  labels_encoder_unscaled: 0.3834 (1.0158)  labels_decoder_unscaled: 3.4467 (3.4951)  time: 0.0764  data: 0.0010  max mem: 3463
+Test:  [450/559]  eta: 0:00:09  loss: 2.1323 (2.7313)  labels_encoder: 0.4184 (0.9852)  labels_decoder: 1.7189 (1.7461)  labels_encoder_unscaled: 0.4184 (0.9852)  labels_decoder_unscaled: 3.4379 (3.4923)  time: 0.0792  data: 0.0002  max mem: 3463
+Test:  [500/559]  eta: 0:00:04  loss: 2.2265 (2.7092)  labels_encoder: 0.5121 (0.9652)  labels_decoder: 1.7153 (1.7440)  labels_encoder_unscaled: 0.5121 (0.9652)  labels_decoder_unscaled: 3.4307 (3.4880)  time: 0.0775  data: 0.0002  max mem: 3463
+Test:  [550/559]  eta: 0:00:00  loss: 2.3900 (2.6799)  labels_encoder: 0.6599 (0.9368)  labels_decoder: 1.7222 (1.7431)  labels_encoder_unscaled: 0.6599 (0.9368)  labels_decoder_unscaled: 3.4444 (3.4863)  time: 0.0748  data: 0.0001  max mem: 3463
+Test:  [558/559]  eta: 0:00:00  loss: 2.0923 (2.6731)  labels_encoder: 0.3729 (0.9303)  labels_decoder: 1.7191 (1.7428)  labels_encoder_unscaled: 0.3729 (0.9303)  labels_decoder_unscaled: 3.4382 (3.4856)  time: 0.0652  data: 0.0001  max mem: 3463
+Test: Total time: 0:00:45 (0.0821 s / it)
+Averaged stats: loss: 2.0923 (2.6731)  labels_encoder: 0.3729 (0.9303)  labels_decoder: 1.7191 (1.7428)  labels_encoder_unscaled: 0.3729 (0.9303)  labels_decoder_unscaled: 3.4382 (3.4856)
+(21, 71496)
+(21, 71496)
+[Epoch-2] [IDU-tvseries_kin_features.pickle] mAP: 0.1351, mcAP: 0.8863
+
+dec_mAP all together: | 0.00733675125309931 |.
+dec_mAP_pred | 0 : 0.007201896432252974 |.
+dec_mAP_pred | 1 : 0.007288561899359565 |.
+dec_mAP_pred | 2 : 0.007382321267304659 |.
+dec_mAP_pred | 3 : 0.0074625601768356364 |.
+dec_mAP_pred | 4 : 0.0074979565643804365 |.
+dec_mAP_pred | 5 : 0.007523272653228245 |.
+dec_mAP_pred | 6 : 0.007582071735307975 |.
+dec_mAP_pred | 7 : 0.007527497378687738 |.
+all decoder map: | 0.0074 |.
+BaseballPitch: 0.0759
+BasketballDunk: 0.0713
+Billiards: 0.0054
+CleanAndJerk: 0.3958
+CliffDiving: 0.3573
+CricketBowling: 0.0560
+CricketShot: 0.0911
+Diving: 0.0164
+FrisbeeCatch: 0.1041
+GolfSwing: 0.0666
+HammerThrow: 0.0944
+HighJump: 0.0661
+JavelinThrow: 0.1204
+LongJump: 0.4291
+PoleVault: 0.1203
+Shotput: 0.1529
+SoccerPenalty: 0.0539
+TennisSwing: 0.1940
+ThrowDiscus: 0.0795
+VolleyballSpiking: 0.1521
+Epoch: [3]  [   0/1510]  eta: 1:02:16  lr: 0.000001  loss: 0.8513 (0.8513)  labels_encoder: 0.5806 (0.5806)  labels_decoder: 0.2707 (0.2707)  labels_encoder_unscaled: 0.5806 (0.5806)  labels_decoder_unscaled: 0.5415 (0.5415)  time: 2.4743  data: 2.2992  max mem: 3463
+Epoch: [3]  [  50/1510]  eta: 0:05:04  lr: 0.000001  loss: 0.7521 (0.8175)  labels_encoder: 0.4827 (0.5451)  labels_decoder: 0.2712 (0.2724)  labels_encoder_unscaled: 0.4827 (0.5451)  labels_decoder_unscaled: 0.5423 (0.5447)  time: 0.1604  data: 0.0003  max mem: 3463
+Epoch: [3]  [ 100/1510]  eta: 0:04:23  lr: 0.000001  loss: 0.7914 (0.8244)  labels_encoder: 0.5201 (0.5521)  labels_decoder: 0.2719 (0.2723)  labels_encoder_unscaled: 0.5201 (0.5521)  labels_decoder_unscaled: 0.5438 (0.5445)  time: 0.1695  data: 0.0002  max mem: 3463
+Epoch: [3]  [ 150/1510]  eta: 0:04:03  lr: 0.000001  loss: 0.8342 (0.8275)  labels_encoder: 0.5595 (0.5552)  labels_decoder: 0.2718 (0.2723)  labels_encoder_unscaled: 0.5595 (0.5552)  labels_decoder_unscaled: 0.5437 (0.5447)  time: 0.1594  data: 0.0002  max mem: 3463
+Epoch: [3]  [ 200/1510]  eta: 0:03:48  lr: 0.000001  loss: 0.8383 (0.8244)  labels_encoder: 0.5681 (0.5521)  labels_decoder: 0.2721 (0.2723)  labels_encoder_unscaled: 0.5681 (0.5521)  labels_decoder_unscaled: 0.5443 (0.5445)  time: 0.1435  data: 0.0003  max mem: 3463
+Epoch: [3]  [ 250/1510]  eta: 0:03:37  lr: 0.000001  loss: 0.8155 (0.8242)  labels_encoder: 0.5415 (0.5519)  labels_decoder: 0.2704 (0.2723)  labels_encoder_unscaled: 0.5415 (0.5519)  labels_decoder_unscaled: 0.5408 (0.5447)  time: 0.1475  data: 0.0002  max mem: 3463
+Epoch: [3]  [ 300/1510]  eta: 0:03:25  lr: 0.000001  loss: 0.8246 (0.8241)  labels_encoder: 0.5490 (0.5517)  labels_decoder: 0.2735 (0.2724)  labels_encoder_unscaled: 0.5490 (0.5517)  labels_decoder_unscaled: 0.5469 (0.5448)  time: 0.1528  data: 0.0003  max mem: 3463
+Epoch: [3]  [ 350/1510]  eta: 0:03:14  lr: 0.000001  loss: 0.7824 (0.8214)  labels_encoder: 0.5100 (0.5489)  labels_decoder: 0.2733 (0.2725)  labels_encoder_unscaled: 0.5100 (0.5489)  labels_decoder_unscaled: 0.5467 (0.5450)  time: 0.1563  data: 0.0003  max mem: 3463
+Epoch: [3]  [ 400/1510]  eta: 0:03:05  lr: 0.000001  loss: 0.7894 (0.8209)  labels_encoder: 0.5195 (0.5484)  labels_decoder: 0.2718 (0.2724)  labels_encoder_unscaled: 0.5195 (0.5484)  labels_decoder_unscaled: 0.5436 (0.5448)  time: 0.1640  data: 0.0003  max mem: 3463
+Epoch: [3]  [ 450/1510]  eta: 0:02:56  lr: 0.000001  loss: 0.8516 (0.8224)  labels_encoder: 0.5766 (0.5500)  labels_decoder: 0.2736 (0.2725)  labels_encoder_unscaled: 0.5766 (0.5500)  labels_decoder_unscaled: 0.5471 (0.5449)  time: 0.1606  data: 0.0003  max mem: 3463
+Epoch: [3]  [ 500/1510]  eta: 0:02:47  lr: 0.000001  loss: 0.7745 (0.8227)  labels_encoder: 0.5038 (0.5503)  labels_decoder: 0.2720 (0.2724)  labels_encoder_unscaled: 0.5038 (0.5503)  labels_decoder_unscaled: 0.5441 (0.5449)  time: 0.1525  data: 0.0003  max mem: 3463
+Epoch: [3]  [ 550/1510]  eta: 0:02:37  lr: 0.000001  loss: 0.8548 (0.8224)  labels_encoder: 0.5822 (0.5500)  labels_decoder: 0.2725 (0.2725)  labels_encoder_unscaled: 0.5822 (0.5500)  labels_decoder_unscaled: 0.5450 (0.5449)  time: 0.1518  data: 0.0002  max mem: 3463
+Epoch: [3]  [ 600/1510]  eta: 0:02:29  lr: 0.000001  loss: 0.8004 (0.8204)  labels_encoder: 0.5295 (0.5480)  labels_decoder: 0.2720 (0.2725)  labels_encoder_unscaled: 0.5295 (0.5480)  labels_decoder_unscaled: 0.5440 (0.5449)  time: 0.1647  data: 0.0003  max mem: 3463
+Epoch: [3]  [ 650/1510]  eta: 0:02:21  lr: 0.000001  loss: 0.7843 (0.8186)  labels_encoder: 0.5103 (0.5461)  labels_decoder: 0.2707 (0.2725)  labels_encoder_unscaled: 0.5103 (0.5461)  labels_decoder_unscaled: 0.5415 (0.5449)  time: 0.1539  data: 0.0003  max mem: 3463
+Epoch: [3]  [ 700/1510]  eta: 0:02:12  lr: 0.000001  loss: 0.7986 (0.8180)  labels_encoder: 0.5285 (0.5455)  labels_decoder: 0.2715 (0.2724)  labels_encoder_unscaled: 0.5285 (0.5455)  labels_decoder_unscaled: 0.5431 (0.5449)  time: 0.1518  data: 0.0003  max mem: 3463
+Epoch: [3]  [ 750/1510]  eta: 0:02:03  lr: 0.000001  loss: 0.8198 (0.8180)  labels_encoder: 0.5488 (0.5456)  labels_decoder: 0.2723 (0.2724)  labels_encoder_unscaled: 0.5488 (0.5456)  labels_decoder_unscaled: 0.5447 (0.5449)  time: 0.1503  data: 0.0002  max mem: 3463
+Epoch: [3]  [ 800/1510]  eta: 0:01:55  lr: 0.000001  loss: 0.8258 (0.8188)  labels_encoder: 0.5543 (0.5463)  labels_decoder: 0.2724 (0.2725)  labels_encoder_unscaled: 0.5543 (0.5463)  labels_decoder_unscaled: 0.5449 (0.5450)  time: 0.1668  data: 0.0002  max mem: 3463
+Epoch: [3]  [ 850/1510]  eta: 0:01:47  lr: 0.000001  loss: 0.8381 (0.8184)  labels_encoder: 0.5639 (0.5459)  labels_decoder: 0.2727 (0.2725)  labels_encoder_unscaled: 0.5639 (0.5459)  labels_decoder_unscaled: 0.5454 (0.5450)  time: 0.1633  data: 0.0003  max mem: 3463
+Epoch: [3]  [ 900/1510]  eta: 0:01:39  lr: 0.000001  loss: 0.7553 (0.8161)  labels_encoder: 0.4814 (0.5436)  labels_decoder: 0.2715 (0.2725)  labels_encoder_unscaled: 0.4814 (0.5436)  labels_decoder_unscaled: 0.5429 (0.5450)  time: 0.1659  data: 0.0003  max mem: 3463
+Epoch: [3]  [ 950/1510]  eta: 0:01:31  lr: 0.000001  loss: 0.8173 (0.8174)  labels_encoder: 0.5430 (0.5449)  labels_decoder: 0.2716 (0.2725)  labels_encoder_unscaled: 0.5430 (0.5449)  labels_decoder_unscaled: 0.5433 (0.5450)  time: 0.1703  data: 0.0004  max mem: 3463
+Epoch: [3]  [1000/1510]  eta: 0:01:23  lr: 0.000001  loss: 0.7758 (0.8168)  labels_encoder: 0.5074 (0.5443)  labels_decoder: 0.2714 (0.2725)  labels_encoder_unscaled: 0.5074 (0.5443)  labels_decoder_unscaled: 0.5428 (0.5450)  time: 0.1652  data: 0.0003  max mem: 3463
+Epoch: [3]  [1050/1510]  eta: 0:01:15  lr: 0.000001  loss: 0.8679 (0.8189)  labels_encoder: 0.5932 (0.5464)  labels_decoder: 0.2739 (0.2725)  labels_encoder_unscaled: 0.5932 (0.5464)  labels_decoder_unscaled: 0.5478 (0.5451)  time: 0.1759  data: 0.0003  max mem: 3463
+Epoch: [3]  [1100/1510]  eta: 0:01:06  lr: 0.000001  loss: 0.8112 (0.8183)  labels_encoder: 0.5378 (0.5458)  labels_decoder: 0.2726 (0.2725)  labels_encoder_unscaled: 0.5378 (0.5458)  labels_decoder_unscaled: 0.5452 (0.5451)  time: 0.1464  data: 0.0002  max mem: 3463
+Epoch: [3]  [1150/1510]  eta: 0:00:58  lr: 0.000001  loss: 0.7688 (0.8176)  labels_encoder: 0.4970 (0.5451)  labels_decoder: 0.2718 (0.2725)  labels_encoder_unscaled: 0.4970 (0.5451)  labels_decoder_unscaled: 0.5435 (0.5451)  time: 0.1455  data: 0.0002  max mem: 3463
+Epoch: [3]  [1200/1510]  eta: 0:00:50  lr: 0.000001  loss: 0.7667 (0.8170)  labels_encoder: 0.4944 (0.5445)  labels_decoder: 0.2721 (0.2725)  labels_encoder_unscaled: 0.4944 (0.5445)  labels_decoder_unscaled: 0.5442 (0.5451)  time: 0.1441  data: 0.0002  max mem: 3463
+Epoch: [3]  [1250/1510]  eta: 0:00:41  lr: 0.000001  loss: 0.7979 (0.8170)  labels_encoder: 0.5245 (0.5445)  labels_decoder: 0.2715 (0.2725)  labels_encoder_unscaled: 0.5245 (0.5445)  labels_decoder_unscaled: 0.5431 (0.5450)  time: 0.1433  data: 0.0002  max mem: 3463
+Epoch: [3]  [1300/1510]  eta: 0:00:33  lr: 0.000001  loss: 0.8141 (0.8170)  labels_encoder: 0.5399 (0.5445)  labels_decoder: 0.2728 (0.2725)  labels_encoder_unscaled: 0.5399 (0.5445)  labels_decoder_unscaled: 0.5457 (0.5451)  time: 0.1500  data: 0.0002  max mem: 3463
+Epoch: [3]  [1350/1510]  eta: 0:00:25  lr: 0.000001  loss: 0.8394 (0.8171)  labels_encoder: 0.5617 (0.5446)  labels_decoder: 0.2718 (0.2725)  labels_encoder_unscaled: 0.5617 (0.5446)  labels_decoder_unscaled: 0.5436 (0.5450)  time: 0.1441  data: 0.0002  max mem: 3463
+Epoch: [3]  [1400/1510]  eta: 0:00:17  lr: 0.000001  loss: 0.7648 (0.8170)  labels_encoder: 0.4936 (0.5445)  labels_decoder: 0.2723 (0.2725)  labels_encoder_unscaled: 0.4936 (0.5445)  labels_decoder_unscaled: 0.5447 (0.5450)  time: 0.1605  data: 0.0002  max mem: 3463
+Epoch: [3]  [1450/1510]  eta: 0:00:09  lr: 0.000001  loss: 0.7950 (0.8156)  labels_encoder: 0.5224 (0.5431)  labels_decoder: 0.2720 (0.2725)  labels_encoder_unscaled: 0.5224 (0.5431)  labels_decoder_unscaled: 0.5441 (0.5450)  time: 0.1538  data: 0.0004  max mem: 3463
+Epoch: [3]  [1500/1510]  eta: 0:00:01  lr: 0.000001  loss: 0.8072 (0.8153)  labels_encoder: 0.5346 (0.5427)  labels_decoder: 0.2728 (0.2725)  labels_encoder_unscaled: 0.5346 (0.5427)  labels_decoder_unscaled: 0.5456 (0.5450)  time: 0.1419  data: 0.0005  max mem: 3463
+Epoch: [3]  [1509/1510]  eta: 0:00:00  lr: 0.000001  loss: 0.8213 (0.8153)  labels_encoder: 0.5505 (0.5428)  labels_decoder: 0.2726 (0.2725)  labels_encoder_unscaled: 0.5505 (0.5428)  labels_decoder_unscaled: 0.5451 (0.5450)  time: 0.1339  data: 0.0004  max mem: 3463
+Epoch: [3] Total time: 0:04:02 (0.1604 s / it)
+Averaged stats: lr: 0.000001  loss: 0.8213 (0.8153)  labels_encoder: 0.5505 (0.5428)  labels_decoder: 0.2726 (0.2725)  labels_encoder_unscaled: 0.5505 (0.5428)  labels_decoder_unscaled: 0.5451 (0.5450)
+Test:  [  0/559]  eta: 0:21:22  loss: 2.4750 (2.4750)  labels_encoder: 0.7671 (0.7671)  labels_decoder: 1.7080 (1.7080)  labels_encoder_unscaled: 0.7671 (0.7671)  labels_decoder_unscaled: 3.4159 (3.4159)  time: 2.2940  data: 2.2439  max mem: 3463
+Test:  [ 50/559]  eta: 0:01:00  loss: 2.7193 (2.7048)  labels_encoder: 1.0136 (0.9798)  labels_decoder: 1.7134 (1.7251)  labels_encoder_unscaled: 1.0136 (0.9798)  labels_decoder_unscaled: 3.4268 (3.4501)  time: 0.0799  data: 0.0002  max mem: 3463
+Test:  [100/559]  eta: 0:00:44  loss: 2.3522 (2.6669)  labels_encoder: 0.6379 (0.9436)  labels_decoder: 1.7197 (1.7233)  labels_encoder_unscaled: 0.6379 (0.9436)  labels_decoder_unscaled: 3.4394 (3.4467)  time: 0.0757  data: 0.0003  max mem: 3463
+Test:  [150/559]  eta: 0:00:36  loss: 2.2608 (2.6724)  labels_encoder: 0.5496 (0.9460)  labels_decoder: 1.7165 (1.7265)  labels_encoder_unscaled: 0.5496 (0.9460)  labels_decoder_unscaled: 3.4330 (3.4529)  time: 0.0744  data: 0.0002  max mem: 3463
+Test:  [200/559]  eta: 0:00:30  loss: 2.1766 (2.5936)  labels_encoder: 0.4683 (0.8672)  labels_decoder: 1.7156 (1.7264)  labels_encoder_unscaled: 0.4683 (0.8672)  labels_decoder_unscaled: 3.4313 (3.4528)  time: 0.0675  data: 0.0002  max mem: 3463
+Test:  [250/559]  eta: 0:00:25  loss: 2.4754 (2.7104)  labels_encoder: 0.7604 (0.9709)  labels_decoder: 1.7215 (1.7395)  labels_encoder_unscaled: 0.7604 (0.9709)  labels_decoder_unscaled: 3.4430 (3.4789)  time: 0.0713  data: 0.0002  max mem: 3463
+Test:  [300/559]  eta: 0:00:20  loss: 2.7657 (2.7614)  labels_encoder: 1.0209 (1.0158)  labels_decoder: 1.7255 (1.7456)  labels_encoder_unscaled: 1.0209 (1.0158)  labels_decoder_unscaled: 3.4511 (3.4912)  time: 0.0718  data: 0.0002  max mem: 3463
+Test:  [350/559]  eta: 0:00:16  loss: 2.4670 (2.7903)  labels_encoder: 0.7583 (1.0413)  labels_decoder: 1.7208 (1.7490)  labels_encoder_unscaled: 0.7583 (1.0413)  labels_decoder_unscaled: 3.4416 (3.4980)  time: 0.0669  data: 0.0002  max mem: 3463
+Test:  [400/559]  eta: 0:00:12  loss: 2.1199 (2.7623)  labels_encoder: 0.3915 (1.0146)  labels_decoder: 1.7229 (1.7477)  labels_encoder_unscaled: 0.3915 (1.0146)  labels_decoder_unscaled: 3.4457 (3.4954)  time: 0.0810  data: 0.0002  max mem: 3463
+Test:  [450/559]  eta: 0:00:08  loss: 2.1193 (2.7300)  labels_encoder: 0.3984 (0.9838)  labels_decoder: 1.7181 (1.7463)  labels_encoder_unscaled: 0.3984 (0.9838)  labels_decoder_unscaled: 3.4362 (3.4925)  time: 0.0697  data: 0.0002  max mem: 3463
+Test:  [500/559]  eta: 0:00:04  loss: 2.2071 (2.7094)  labels_encoder: 0.4898 (0.9653)  labels_decoder: 1.7157 (1.7441)  labels_encoder_unscaled: 0.4898 (0.9653)  labels_decoder_unscaled: 3.4314 (3.4882)  time: 0.0691  data: 0.0001  max mem: 3463
+Test:  [550/559]  eta: 0:00:00  loss: 2.4160 (2.6810)  labels_encoder: 0.6858 (0.9378)  labels_decoder: 1.7208 (1.7432)  labels_encoder_unscaled: 0.6858 (0.9378)  labels_decoder_unscaled: 3.4416 (3.4864)  time: 0.0670  data: 0.0001  max mem: 3463
+Test:  [558/559]  eta: 0:00:00  loss: 2.0797 (2.6740)  labels_encoder: 0.3610 (0.9311)  labels_decoder: 1.7183 (1.7429)  labels_encoder_unscaled: 0.3610 (0.9311)  labels_decoder_unscaled: 3.4366 (3.4857)  time: 0.0527  data: 0.0001  max mem: 3463
+Test: Total time: 0:00:42 (0.0767 s / it)
+Averaged stats: loss: 2.0797 (2.6740)  labels_encoder: 0.3610 (0.9311)  labels_decoder: 1.7183 (1.7429)  labels_encoder_unscaled: 0.3610 (0.9311)  labels_decoder_unscaled: 3.4366 (3.4857)
+(21, 71496)
+(21, 71496)
+[Epoch-3] [IDU-tvseries_kin_features.pickle] mAP: 0.1349, mcAP: 0.8869
+
+dec_mAP all together: | 0.007450145335957452 |.
+dec_mAP_pred | 0 : 0.007311763014692321 |.
+dec_mAP_pred | 1 : 0.00739848920997402 |.
+dec_mAP_pred | 2 : 0.007494619772344027 |.
+dec_mAP_pred | 3 : 0.007568846667006139 |.
+dec_mAP_pred | 4 : 0.007604361111513863 |.
+dec_mAP_pred | 5 : 0.0076268905319274065 |.
+dec_mAP_pred | 6 : 0.007696746392456993 |.
+dec_mAP_pred | 7 : 0.007642950213861015 |.
+all decoder map: | 0.0075 |.
+BaseballPitch: 0.0838
+BasketballDunk: 0.0738
+Billiards: 0.0056
+CleanAndJerk: 0.3952
+CliffDiving: 0.3542
+CricketBowling: 0.0555
+CricketShot: 0.0894
+Diving: 0.0149
+FrisbeeCatch: 0.1174
+GolfSwing: 0.0650
+HammerThrow: 0.1068
+HighJump: 0.0582
+JavelinThrow: 0.1220
+LongJump: 0.4176
+PoleVault: 0.1184
+Shotput: 0.1515
+SoccerPenalty: 0.0543
+TennisSwing: 0.1831
+ThrowDiscus: 0.0814
+VolleyballSpiking: 0.1501
+Epoch: [4]  [   0/1510]  eta: 0:52:27  lr: 0.000000  loss: 0.7312 (0.7312)  labels_encoder: 0.4539 (0.4539)  labels_decoder: 0.2774 (0.2774)  labels_encoder_unscaled: 0.4539 (0.4539)  labels_decoder_unscaled: 0.5548 (0.5548)  time: 2.0847  data: 1.9071  max mem: 3463
+Epoch: [4]  [  50/1510]  eta: 0:04:19  lr: 0.000000  loss: 0.7579 (0.8083)  labels_encoder: 0.4860 (0.5363)  labels_decoder: 0.2716 (0.2719)  labels_encoder_unscaled: 0.4860 (0.5363)  labels_decoder_unscaled: 0.5433 (0.5439)  time: 0.1413  data: 0.0003  max mem: 3463
+Epoch: [4]  [ 100/1510]  eta: 0:03:43  lr: 0.000000  loss: 0.7725 (0.7955)  labels_encoder: 0.5004 (0.5235)  labels_decoder: 0.2717 (0.2720)  labels_encoder_unscaled: 0.5004 (0.5235)  labels_decoder_unscaled: 0.5434 (0.5441)  time: 0.1379  data: 0.0003  max mem: 3463
+Epoch: [4]  [ 150/1510]  eta: 0:03:27  lr: 0.000000  loss: 0.8280 (0.8021)  labels_encoder: 0.5541 (0.5299)  labels_decoder: 0.2731 (0.2722)  labels_encoder_unscaled: 0.5541 (0.5299)  labels_decoder_unscaled: 0.5462 (0.5444)  time: 0.1453  data: 0.0002  max mem: 3463
+Epoch: [4]  [ 200/1510]  eta: 0:03:14  lr: 0.000000  loss: 0.7829 (0.8087)  labels_encoder: 0.5103 (0.5365)  labels_decoder: 0.2726 (0.2722)  labels_encoder_unscaled: 0.5103 (0.5365)  labels_decoder_unscaled: 0.5452 (0.5444)  time: 0.1392  data: 0.0002  max mem: 3463
+Epoch: [4]  [ 250/1510]  eta: 0:03:06  lr: 0.000000  loss: 0.7481 (0.8046)  labels_encoder: 0.4766 (0.5325)  labels_decoder: 0.2716 (0.2721)  labels_encoder_unscaled: 0.4766 (0.5325)  labels_decoder_unscaled: 0.5432 (0.5443)  time: 0.1444  data: 0.0003  max mem: 3463
+Epoch: [4]  [ 300/1510]  eta: 0:02:59  lr: 0.000000  loss: 0.7699 (0.8060)  labels_encoder: 0.5004 (0.5339)  labels_decoder: 0.2720 (0.2721)  labels_encoder_unscaled: 0.5004 (0.5339)  labels_decoder_unscaled: 0.5440 (0.5443)  time: 0.1508  data: 0.0003  max mem: 3463
+Epoch: [4]  [ 350/1510]  eta: 0:02:51  lr: 0.000000  loss: 0.8160 (0.8058)  labels_encoder: 0.5421 (0.5336)  labels_decoder: 0.2723 (0.2722)  labels_encoder_unscaled: 0.5421 (0.5336)  labels_decoder_unscaled: 0.5446 (0.5444)  time: 0.1512  data: 0.0003  max mem: 3463
+Epoch: [4]  [ 400/1510]  eta: 0:02:45  lr: 0.000000  loss: 0.8589 (0.8093)  labels_encoder: 0.5858 (0.5371)  labels_decoder: 0.2720 (0.2723)  labels_encoder_unscaled: 0.5858 (0.5371)  labels_decoder_unscaled: 0.5440 (0.5445)  time: 0.1546  data: 0.0003  max mem: 3463
+Epoch: [4]  [ 450/1510]  eta: 0:02:38  lr: 0.000000  loss: 0.8108 (0.8110)  labels_encoder: 0.5391 (0.5387)  labels_decoder: 0.2723 (0.2723)  labels_encoder_unscaled: 0.5391 (0.5387)  labels_decoder_unscaled: 0.5447 (0.5447)  time: 0.1518  data: 0.0003  max mem: 3463
+Epoch: [4]  [ 500/1510]  eta: 0:02:30  lr: 0.000000  loss: 0.8034 (0.8108)  labels_encoder: 0.5294 (0.5384)  labels_decoder: 0.2726 (0.2724)  labels_encoder_unscaled: 0.5294 (0.5384)  labels_decoder_unscaled: 0.5451 (0.5448)  time: 0.1448  data: 0.0003  max mem: 3463
+Epoch: [4]  [ 550/1510]  eta: 0:02:23  lr: 0.000000  loss: 0.8477 (0.8117)  labels_encoder: 0.5750 (0.5392)  labels_decoder: 0.2722 (0.2724)  labels_encoder_unscaled: 0.5750 (0.5392)  labels_decoder_unscaled: 0.5444 (0.5448)  time: 0.1535  data: 0.0003  max mem: 3463
+Epoch: [4]  [ 600/1510]  eta: 0:02:17  lr: 0.000000  loss: 0.7835 (0.8112)  labels_encoder: 0.5113 (0.5387)  labels_decoder: 0.2723 (0.2724)  labels_encoder_unscaled: 0.5113 (0.5387)  labels_decoder_unscaled: 0.5446 (0.5449)  time: 0.1818  data: 0.0005  max mem: 3463
+Epoch: [4]  [ 650/1510]  eta: 0:02:11  lr: 0.000000  loss: 0.8033 (0.8123)  labels_encoder: 0.5349 (0.5398)  labels_decoder: 0.2715 (0.2725)  labels_encoder_unscaled: 0.5349 (0.5398)  labels_decoder_unscaled: 0.5431 (0.5450)  time: 0.1729  data: 0.0004  max mem: 3463
+Epoch: [4]  [ 700/1510]  eta: 0:02:05  lr: 0.000000  loss: 0.8194 (0.8119)  labels_encoder: 0.5479 (0.5394)  labels_decoder: 0.2734 (0.2725)  labels_encoder_unscaled: 0.5479 (0.5394)  labels_decoder_unscaled: 0.5467 (0.5451)  time: 0.1819  data: 0.0004  max mem: 3463
+Epoch: [4]  [ 750/1510]  eta: 0:01:58  lr: 0.000000  loss: 0.8092 (0.8118)  labels_encoder: 0.5374 (0.5393)  labels_decoder: 0.2717 (0.2725)  labels_encoder_unscaled: 0.5374 (0.5393)  labels_decoder_unscaled: 0.5434 (0.5450)  time: 0.1816  data: 0.0004  max mem: 3463
+Epoch: [4]  [ 800/1510]  eta: 0:01:52  lr: 0.000000  loss: 0.7866 (0.8122)  labels_encoder: 0.5114 (0.5397)  labels_decoder: 0.2719 (0.2725)  labels_encoder_unscaled: 0.5114 (0.5397)  labels_decoder_unscaled: 0.5438 (0.5450)  time: 0.1815  data: 0.0004  max mem: 3463
+Epoch: [4]  [ 850/1510]  eta: 0:01:44  lr: 0.000000  loss: 0.8256 (0.8125)  labels_encoder: 0.5548 (0.5400)  labels_decoder: 0.2720 (0.2725)  labels_encoder_unscaled: 0.5548 (0.5400)  labels_decoder_unscaled: 0.5441 (0.5451)  time: 0.1717  data: 0.0005  max mem: 3463
+Epoch: [4]  [ 900/1510]  eta: 0:01:37  lr: 0.000000  loss: 0.7983 (0.8115)  labels_encoder: 0.5269 (0.5390)  labels_decoder: 0.2715 (0.2725)  labels_encoder_unscaled: 0.5269 (0.5390)  labels_decoder_unscaled: 0.5429 (0.5450)  time: 0.1607  data: 0.0003  max mem: 3463
+Epoch: [4]  [ 950/1510]  eta: 0:01:29  lr: 0.000000  loss: 0.8088 (0.8119)  labels_encoder: 0.5392 (0.5394)  labels_decoder: 0.2723 (0.2725)  labels_encoder_unscaled: 0.5392 (0.5394)  labels_decoder_unscaled: 0.5446 (0.5450)  time: 0.1811  data: 0.0004  max mem: 3463
+Epoch: [4]  [1000/1510]  eta: 0:01:22  lr: 0.000000  loss: 0.7604 (0.8119)  labels_encoder: 0.4918 (0.5394)  labels_decoder: 0.2718 (0.2725)  labels_encoder_unscaled: 0.4918 (0.5394)  labels_decoder_unscaled: 0.5437 (0.5450)  time: 0.1839  data: 0.0005  max mem: 3463
+Epoch: [4]  [1050/1510]  eta: 0:01:14  lr: 0.000000  loss: 0.8132 (0.8125)  labels_encoder: 0.5448 (0.5400)  labels_decoder: 0.2705 (0.2725)  labels_encoder_unscaled: 0.5448 (0.5400)  labels_decoder_unscaled: 0.5410 (0.5450)  time: 0.1824  data: 0.0004  max mem: 3463
+Epoch: [4]  [1100/1510]  eta: 0:01:07  lr: 0.000000  loss: 0.8011 (0.8128)  labels_encoder: 0.5299 (0.5403)  labels_decoder: 0.2731 (0.2725)  labels_encoder_unscaled: 0.5299 (0.5403)  labels_decoder_unscaled: 0.5461 (0.5451)  time: 0.1881  data: 0.0004  max mem: 3463
+Epoch: [4]  [1150/1510]  eta: 0:00:59  lr: 0.000000  loss: 0.8119 (0.8138)  labels_encoder: 0.5351 (0.5412)  labels_decoder: 0.2723 (0.2725)  labels_encoder_unscaled: 0.5351 (0.5412)  labels_decoder_unscaled: 0.5445 (0.5451)  time: 0.1767  data: 0.0003  max mem: 3463
+Epoch: [4]  [1200/1510]  eta: 0:00:51  lr: 0.000000  loss: 0.8529 (0.8137)  labels_encoder: 0.5821 (0.5412)  labels_decoder: 0.2726 (0.2725)  labels_encoder_unscaled: 0.5821 (0.5412)  labels_decoder_unscaled: 0.5451 (0.5450)  time: 0.1731  data: 0.0003  max mem: 3463
+Epoch: [4]  [1250/1510]  eta: 0:00:42  lr: 0.000000  loss: 0.8020 (0.8142)  labels_encoder: 0.5329 (0.5417)  labels_decoder: 0.2736 (0.2725)  labels_encoder_unscaled: 0.5329 (0.5417)  labels_decoder_unscaled: 0.5473 (0.5451)  time: 0.1642  data: 0.0003  max mem: 3463
+Epoch: [4]  [1300/1510]  eta: 0:00:34  lr: 0.000000  loss: 0.7967 (0.8138)  labels_encoder: 0.5255 (0.5413)  labels_decoder: 0.2710 (0.2725)  labels_encoder_unscaled: 0.5255 (0.5413)  labels_decoder_unscaled: 0.5419 (0.5451)  time: 0.1534  data: 0.0003  max mem: 3463
+Epoch: [4]  [1350/1510]  eta: 0:00:26  lr: 0.000000  loss: 0.7995 (0.8136)  labels_encoder: 0.5284 (0.5410)  labels_decoder: 0.2729 (0.2726)  labels_encoder_unscaled: 0.5284 (0.5410)  labels_decoder_unscaled: 0.5457 (0.5451)  time: 0.1609  data: 0.0002  max mem: 3463
+Epoch: [4]  [1400/1510]  eta: 0:00:17  lr: 0.000000  loss: 0.7972 (0.8129)  labels_encoder: 0.5241 (0.5404)  labels_decoder: 0.2713 (0.2726)  labels_encoder_unscaled: 0.5241 (0.5404)  labels_decoder_unscaled: 0.5425 (0.5451)  time: 0.1599  data: 0.0003  max mem: 3463
+Epoch: [4]  [1450/1510]  eta: 0:00:09  lr: 0.000000  loss: 0.7340 (0.8125)  labels_encoder: 0.4583 (0.5400)  labels_decoder: 0.2711 (0.2725)  labels_encoder_unscaled: 0.4583 (0.5400)  labels_decoder_unscaled: 0.5421 (0.5451)  time: 0.1527  data: 0.0003  max mem: 3463
+Epoch: [4]  [1500/1510]  eta: 0:00:01  lr: 0.000000  loss: 0.7645 (0.8112)  labels_encoder: 0.4905 (0.5387)  labels_decoder: 0.2708 (0.2725)  labels_encoder_unscaled: 0.4905 (0.5387)  labels_decoder_unscaled: 0.5415 (0.5450)  time: 0.1535  data: 0.0003  max mem: 3463
+Epoch: [4]  [1509/1510]  eta: 0:00:00  lr: 0.000000  loss: 0.7703 (0.8109)  labels_encoder: 0.5005 (0.5384)  labels_decoder: 0.2715 (0.2725)  labels_encoder_unscaled: 0.5005 (0.5384)  labels_decoder_unscaled: 0.5429 (0.5450)  time: 0.1466  data: 0.0003  max mem: 3463
+Epoch: [4] Total time: 0:04:06 (0.1632 s / it)
+Averaged stats: lr: 0.000000  loss: 0.7703 (0.8109)  labels_encoder: 0.5005 (0.5384)  labels_decoder: 0.2715 (0.2725)  labels_encoder_unscaled: 0.5005 (0.5384)  labels_decoder_unscaled: 0.5429 (0.5450)
+Test:  [  0/559]  eta: 0:21:22  loss: 2.4781 (2.4781)  labels_encoder: 0.7702 (0.7702)  labels_decoder: 1.7079 (1.7079)  labels_encoder_unscaled: 0.7702 (0.7702)  labels_decoder_unscaled: 3.4158 (3.4158)  time: 2.2945  data: 2.2195  max mem: 3463
+Test:  [ 50/559]  eta: 0:01:04  loss: 2.7034 (2.7016)  labels_encoder: 0.9979 (0.9767)  labels_decoder: 1.7135 (1.7249)  labels_encoder_unscaled: 0.9979 (0.9767)  labels_decoder_unscaled: 3.4271 (3.4498)  time: 0.0789  data: 0.0002  max mem: 3463
+Test:  [100/559]  eta: 0:00:47  loss: 2.3442 (2.6638)  labels_encoder: 0.6302 (0.9406)  labels_decoder: 1.7195 (1.7232)  labels_encoder_unscaled: 0.6302 (0.9406)  labels_decoder_unscaled: 3.4390 (3.4464)  time: 0.0800  data: 0.0002  max mem: 3463
+Test:  [150/559]  eta: 0:00:38  loss: 2.2701 (2.6702)  labels_encoder: 0.5421 (0.9439)  labels_decoder: 1.7164 (1.7263)  labels_encoder_unscaled: 0.5421 (0.9439)  labels_decoder_unscaled: 3.4329 (3.4526)  time: 0.0739  data: 0.0002  max mem: 3463
+Test:  [200/559]  eta: 0:00:32  loss: 2.1833 (2.5927)  labels_encoder: 0.4752 (0.8664)  labels_decoder: 1.7156 (1.7263)  labels_encoder_unscaled: 0.4752 (0.8664)  labels_decoder_unscaled: 3.4311 (3.4526)  time: 0.0803  data: 0.0002  max mem: 3463
+Test:  [250/559]  eta: 0:00:27  loss: 2.4780 (2.7090)  labels_encoder: 0.7631 (0.9696)  labels_decoder: 1.7213 (1.7394)  labels_encoder_unscaled: 0.7631 (0.9696)  labels_decoder_unscaled: 3.4427 (3.4787)  time: 0.0726  data: 0.0002  max mem: 3463
+Test:  [300/559]  eta: 0:00:22  loss: 2.7717 (2.7596)  labels_encoder: 1.0266 (1.0141)  labels_decoder: 1.7255 (1.7455)  labels_encoder_unscaled: 1.0266 (1.0141)  labels_decoder_unscaled: 3.4509 (3.4910)  time: 0.0775  data: 0.0002  max mem: 3463
+Test:  [350/559]  eta: 0:00:17  loss: 2.4565 (2.7881)  labels_encoder: 0.7479 (1.0392)  labels_decoder: 1.7207 (1.7489)  labels_encoder_unscaled: 0.7479 (1.0392)  labels_decoder_unscaled: 3.4415 (3.4978)  time: 0.0739  data: 0.0002  max mem: 3463
+Test:  [400/559]  eta: 0:00:13  loss: 2.1191 (2.7603)  labels_encoder: 0.3979 (1.0127)  labels_decoder: 1.7227 (1.7476)  labels_encoder_unscaled: 0.3979 (1.0127)  labels_decoder_unscaled: 3.4455 (3.4952)  time: 0.0790  data: 0.0002  max mem: 3463
+Test:  [450/559]  eta: 0:00:09  loss: 2.1212 (2.7285)  labels_encoder: 0.4003 (0.9823)  labels_decoder: 1.7179 (1.7462)  labels_encoder_unscaled: 0.4003 (0.9823)  labels_decoder_unscaled: 3.4359 (3.4924)  time: 0.0749  data: 0.0002  max mem: 3463
+Test:  [500/559]  eta: 0:00:04  loss: 2.2155 (2.7083)  labels_encoder: 0.4982 (0.9643)  labels_decoder: 1.7156 (1.7440)  labels_encoder_unscaled: 0.4982 (0.9643)  labels_decoder_unscaled: 3.4311 (3.4881)  time: 0.0740  data: 0.0002  max mem: 3463
+Test:  [550/559]  eta: 0:00:00  loss: 2.4037 (2.6798)  labels_encoder: 0.6736 (0.9366)  labels_decoder: 1.7205 (1.7431)  labels_encoder_unscaled: 0.6736 (0.9366)  labels_decoder_unscaled: 3.4411 (3.4863)  time: 0.0747  data: 0.0001  max mem: 3463
+Test:  [558/559]  eta: 0:00:00  loss: 2.0811 (2.6728)  labels_encoder: 0.3626 (0.9300)  labels_decoder: 1.7181 (1.7428)  labels_encoder_unscaled: 0.3626 (0.9300)  labels_decoder_unscaled: 3.4363 (3.4856)  time: 0.0638  data: 0.0001  max mem: 3463
+Test: Total time: 0:00:45 (0.0820 s / it)
+Averaged stats: loss: 2.0811 (2.6728)  labels_encoder: 0.3626 (0.9300)  labels_decoder: 1.7181 (1.7428)  labels_encoder_unscaled: 0.3626 (0.9300)  labels_decoder_unscaled: 3.4363 (3.4856)
+(21, 71496)
+(21, 71496)
+[Epoch-4] [IDU-tvseries_kin_features.pickle] mAP: 0.1350, mcAP: 0.8869
+
+dec_mAP all together: | 0.0074616314168581156 |.
+dec_mAP_pred | 0 : 0.007324084238983989 |.
+dec_mAP_pred | 1 : 0.007408495752153027 |.
+dec_mAP_pred | 2 : 0.007506771238959334 |.
+dec_mAP_pred | 3 : 0.007580941272084656 |.
+dec_mAP_pred | 4 : 0.007616490811844683 |.
+dec_mAP_pred | 5 : 0.007640387260429917 |.
+dec_mAP_pred | 6 : 0.007712838949856438 |.
+dec_mAP_pred | 7 : 0.007659525596568956 |.
+all decoder map: | 0.0076 |.
+BaseballPitch: 0.0841
+BasketballDunk: 0.0731
+Billiards: 0.0056
+CleanAndJerk: 0.3949
+CliffDiving: 0.3579
+CricketBowling: 0.0553
+CricketShot: 0.0892
+Diving: 0.0148
+FrisbeeCatch: 0.1170
+GolfSwing: 0.0675
+HammerThrow: 0.1069
+HighJump: 0.0586
+JavelinThrow: 0.1194
+LongJump: 0.4165
+PoleVault: 0.1182
+Shotput: 0.1519
+SoccerPenalty: 0.0543
+TennisSwing: 0.1831
+ThrowDiscus: 0.0814
+VolleyballSpiking: 0.1498
+Training time 0:21:34
