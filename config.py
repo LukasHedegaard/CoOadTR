@@ -91,11 +91,16 @@ def get_args_parser():
     )
     parser.add_argument(
         "--positional_encoding_type",
-        default="shifting_learned",
+        default="recycling_learned",
         type=str,
-        help="fixed or learned",
+        help="recycling_learned or recycling_fixed",
     )  # learned  fixed
-
+    parser.add_argument(
+        "--num_embeddings",
+        default=64,
+        type=int,  # 64, 127
+        help="Number of embeddings in RecyclingPositionalEncoding",
+    )
     parser.add_argument(
         "--hidden_dim",
         default=1024,
@@ -154,12 +159,6 @@ def get_args_parser():
         "--dist_url",
         default="tcp://127.0.0.1:12342",
         help="url used to set up distributed training",
-    )
-    parser.add_argument(
-        "--cpe_factor",
-        default=1,
-        type=float,
-        help="Multipliples of sequence length to initialise the circular positional embeddings with",
     )
     # 'env://'
     return parser

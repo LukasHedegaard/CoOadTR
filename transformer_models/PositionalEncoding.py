@@ -40,26 +40,3 @@ class LearnedPositionalEncoding(nn.Module):
         position_embeddings = self.pe(position_ids)
         return x + position_embeddings
 
-
-class ShiftingLearnedPositionalEncoding(nn.Module):
-    def __init__(self, max_position_embeddings, embedding_dim, seq_length):
-        super(ShiftingLearnedPositionalEncoding, self).__init__()
-        self.pe = nn.Embedding(max_position_embeddings, embedding_dim)
-        self.seq_length = seq_length
-        self.index = 0
-
-        self.register_buffer(
-            "position_ids",
-            torch.arange(seq_length).expand((1, -1)),
-        )
-
-    def forward(self, x, position_ids=None):
-        if position_ids is None:
-            position_ids = self.position_ids[:, : self.seq_length]
-
-        position_ids = (position_ids + self.index) % self.pe.num_embeddings
-
-        self.index = (self.index + 1) % self.pe.num_embeddings
-
-        position_embeddings = self.pe(position_ids)
-        return x + position_embeddings

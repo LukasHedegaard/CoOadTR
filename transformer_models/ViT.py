@@ -6,10 +6,9 @@ from .Transformer import TransformerModel, CoTransformerModel
 from .PositionalEncoding import (
     FixedPositionalEncoding,
     LearnedPositionalEncoding,
-    ShiftingLearnedPositionalEncoding,
 )
 import continual as co
-from continual_transformers import CircularPositionalEncoding
+from continual_transformers import RecyclingPositionalEncoding
 
 __all__ = ["ViT_B16", "ViT_B32", "ViT_L16", "ViT_L32", "ViT_H14"]
 
@@ -41,10 +40,11 @@ def CoVisionTransformer(
     flatten_dim = patch_dim * patch_dim * num_channels
 
     linear_encoding = co.Linear(flatten_dim, embedding_dim, channel_dim=1)
-    assert positional_encoding_type == "shifting_learned"
-    position_encoding = CircularPositionalEncoding(
+    assert "recycling" in positional_encoding_type
+    position_encoding = RecyclingPositionalEncoding(
         embedding_dim,
-        int(args.cpe_factor * embedding_dim),
+        args.num_embeddings,
+        learned="learned" in positional_encoding_type,
         forward_update_index_steps=1,
     )
     print("position encoding :", positional_encoding_type)
@@ -121,12 +121,6 @@ class VisionTransformer_v3(nn.Module):
         elif positional_encoding_type == "fixed":
             self.position_encoding = FixedPositionalEncoding(
                 self.embedding_dim,
-            )
-        if positional_encoding_type == "shifting_learned":
-            self.position_encoding = ShiftingLearnedPositionalEncoding(
-                self.seq_length,
-                int(args.cpe_factor * self.embedding_dim),
-                self.seq_length,
             )
         print("position encoding :", positional_encoding_type)
 
