@@ -3,7 +3,7 @@ import re
 
 
 def read_mAPs(filename: str):
-    pattern = re.compile(r"mAP: ([\d.]+)")
+    pattern = re.compile(r"mcAP: ([\d.]+)")
     mAPs = []
     for line in open(filename):
         for match in re.finditer(pattern, line):
@@ -12,26 +12,18 @@ def read_mAPs(filename: str):
 
 
 def name2vars(filename):
-    pattern = re.compile(r"oadtr-(\w\d)_clspos([-\d]+)_seed(\d)_([-\w]+).txt")
-    block, clspos, seed, dataset = re.match(pattern, filename).groups()
-    clspos = {
-        "-1": "-",
-        "0": "1A",
-        "1": "1F",
-        "2": "2A",
-        "3": "2F",
-        "4": "3A",
-    }[clspos]
-    return (block, clspos, seed, dataset)
+    pattern = re.compile(r"oadtr_(\w\d)_seed(\d)_([-\w]+).txt")
+    block, seed, dataset = re.match(pattern, filename).groups()
+    return (block, seed, dataset)
 
 
 run_files = (Path(__file__).parent / "runs").glob("*.txt")
 results = []
 
 for f in run_files:
-    block, clspos, seed, dataset = name2vars(f.name)
+    block, seed, dataset = name2vars(f.name)
     mAPs = read_mAPs(f)
-    results.append([block, clspos, seed, dataset, mAPs])
+    results.append([block, seed, dataset, mAPs])
 
 
 print("epoch1_data=", [[*r[:-1], r[-1][0]] for r in results])
