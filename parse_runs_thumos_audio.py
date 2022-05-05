@@ -17,7 +17,7 @@ def name2vars(filename):
     return (block, seed, dataset)
 
 
-run_files = (Path(__file__).parent / "runs").glob("*.txt")
+run_files = (Path(__file__).parent / "runs_thumos_audio").glob("*.txt")
 results = []
 
 for f in run_files:
