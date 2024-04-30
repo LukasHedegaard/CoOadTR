@@ -23,8 +23,8 @@ pip install --upgrade git+https://github.com/LukasHedegaard/continual-transforme
 
 * Unzip the anno file "./data/anno_thumos.zip"
 * Download the features:
-  * [THUMOS14-Anet feature](https://zenodo.org/record/5035147#.YNhWG7vitPY) 
-  * [THUMOS14-Kinetics feature](https://zenodo.org/record/5140603#.YQDk8britPY)
+  * [THUMOS14-Anet feature](https://drive.google.com/file/d/1Ms709_RSfT2lezPp-0TTkSJCfF-XLeOk/view) 
+  * [THUMOS14-Kinetics feature](https://drive.google.com/file/d/1jk6eiILBISd3GvG_ZNX8kop-DNSZZPXF/view)
   * [TVSeries](https://homes.esat.kuleuven.be/psi-archive/rdegeest/TVSeries.html) is available by contacting the authors of the datasets and signing agreements due to the copyrights. Following [this guide](https://github.com/LukasHedegaard/mmaction2/tree/tvseries-feature-extraction/tools/data/tvseries), we extracted features using TSN ResNet-50 RGB and Flow models pretrained on [ActivityNet](https://github.com/open-mmlab/mmaction2/blob/master/configs/recognition/tsn/README.md#activitynet-v13) and [Kinetics](https://github.com/open-mmlab/mmaction2/blob/master/configs/recognition/tsn/README.md#kinetics-400).
 
 When you have downloaded and placed the THUMOS featues under `~/data`, you can select the features by appending the following to your python command:
